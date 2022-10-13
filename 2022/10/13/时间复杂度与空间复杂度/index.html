@@ -1,0 +1,33 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author"><title>时间复杂度与空间复杂度 · Hexo</title><meta name="description" content="在数据结构和算法中，因为算法本身是不分“好坏”的，而所谓“最好”的算法，则是指最适合当前场景的算法。因此通常考虑程序的执行效率和占用的内存空间，即时间复杂度和空间复杂度，时间复杂度用来表示算法运行时间，空间复杂度用来表示算法所使用的空间。
+通常用O来表示复杂度；
+对于空间复杂度，在一个执行的程序中，"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><meta name="generator" content="Hexo 6.3.0"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">Hexo</a></h3></div></div><ul class="social-links"></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a target="_blank" rel="noopener" href="https://www.caicai.me"> CaiCai </a><span>&</span><a target="_blank" rel="noopener" href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">Home</a></li><li><a href="/about">Sobre</a></li><li><a href="/archives">Arquivo</a></li><li><a href="/links">Links</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>时间复杂度与空间复杂度</a></h3></div><div class="post-content"><p>在数据结构和算法中，因为算法本身是不分“好坏”的，而所谓“最好”的算法，则是指最适合当前场景的算法。因此通常考虑程序的执行效率和占用的内存空间，即时间复杂度和空间复杂度，时间复杂度用来表示算法运行时间，空间复杂度用来表示算法所使用的空间。</p>
+<p>通常用O来表示复杂度；</p>
+<p>对于空间复杂度，在一个执行的程序中，占用的内存空间主要包括：</p>
+<p>1.程序代码本身所占用的存储空间；</p>
+<p>2.如果需要输入输出数据，也会占用一定的存储空间；</p>
+<p>3.运行过程中，可能还需要临时申请更多的存储空间。</p>
+<p>对于第一点，可以通过在编写代码的同时在保证功能的前提下，尽可能的编写足够短的代码；</p>
+<p>对于第二点，程序运行过程中输入输出的数据，往往由要解决的问题而定，即便所用算法不同，程序输入输出所占用的存储空间也是相近的。</p>
+<p>对于第三点，在程序运行过程中临时申请的内存空间，不同算法编写出的程序，运行时申请的临时存储空间通常会有较大不同，因此根据不同的情况编写合适的代码，可以减少空间复杂度；</p>
+<p>空间复杂度的估算方法是：</p>
+<ul>
+<li>如果算法中额外申请的内存空间不受用户输入值的影响（即一个固定值），那么该算法的空间复杂度用<code>O(1)</code>表示；</li>
+<li>如果随着输入值 n 的增大，算法申请的存储空间成线性增长，则程序的空间复杂度用<code>O(n)</code>表示;</li>
+<li>如果随着输入值 n 的增大，程序申请的存储空间成 n^2 关系增长，则程序的空间复杂度用<code>O(n^2)</code>表示；</li>
+<li>如果随着输入值 n 的增大，程序申请的存储空间成 n^3 关系增长，则程序的空间复杂度用<code>O(n^3)</code>表示；</li>
+</ul>
+<p>大多数情况下，一个好的程序更注重时间复杂度，空间复杂度在一个合理范围即可；</p>
+<p>对于时间复杂度，即预估算法的执行时间；</p>
+<p>计算一个算法的时间复杂度，需要经过以下 3 个步骤：</p>
+<h4 id="1-统计算法中各个步骤的执行次数"><a href="#1-统计算法中各个步骤的执行次数" class="headerlink" title="1) 统计算法中各个步骤的执行次数"></a>1) 统计算法中各个步骤的执行次数</h4><h4 id="2-简化算法的执行次数"><a href="#2-简化算法的执行次数" class="headerlink" title="2) 简化算法的执行次数"></a>2) 简化算法的执行次数</h4><h4 id="3-用大O记法表示算法的时间复杂度"><a href="#3-用大O记法表示算法的时间复杂度" class="headerlink" title="3) 用大O记法表示算法的时间复杂度"></a>3) 用大O记法表示算法的时间复杂度</h4><p>在简化中，以 3<em>n2+4</em>n+5 为例，简化过程为：</p>
+<ol>
+<li>当 n 无限大时，3n^2+4n 与 3<em>n^2+4</em>n+5 的值非常接近，是否加 5 对表达式的值影响不大，因此表达式可以简化为 3<em>n^2+4</em>n；</li>
+<li>当 n 无限大时，3<em>n^2 的值要远远大于 4</em>n 的值，它们之间类似于 10000 和 1 之间的关系，因此是否加 4<em>n 对表达式最终的值影响不大，整个表达式可以简化为 3</em>n^2；</li>
+<li>当 n 无限大时，n^2 的值已经超级大，是否乘 3 对最终结果影响不大，整个表达式可以简化为  n^2。</li>
+</ol>
+<p>基于“n 值无限大”的思想，3<em>n^2+4</em>n+5 最终就简化成了 n^2。</p>
+<p>一般情况下的时间复杂度之间大小有以下关系</p>
+<p>O(1)&lt; O(logn) &lt; O(n) &lt; O(n^2) &lt; O(n^3) &lt; O(2^n)</p>
+<p>其中<code>O(1)</code>是最小的，对应的算法的执行时间最短，执行效率最高。</p>
+<p>最后在实际过程，往往采用 “预先估值”的方法挑选算法。具体来讲，就是分析各个算法的实现过程（步骤），估算出它们各自的运行时间和占用的内存大小，就可以挑选出“最好”的算法。</p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-10-13</span><i class="fa fa-tag"></i></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://example.com/2022/10/13/时间复杂度与空间复杂度/,Hexo,时间复杂度与空间复杂度,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="next pagbuttons"><a class="btn" role="navigation" href="/2022/10/11/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/" title="快速排序">Próximo post</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/z16.model.json"},"display":{"position":"left","width":300,"height":600,"hOffset":-15,"vOffset":-15},"mobile":{"show":false},"react":{"opacity":0.7},"log":false});</script></body></html>
