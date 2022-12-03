@@ -11,206 +11,277 @@
 }</style><meta name="generator" content="Hexo 6.3.0"></head><body style="background-image:url(https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg);"><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><ol class="navContent"><li class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></li><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/demo/"><span class="navItemTitle">独立页面</span></a></li></ol></nav><div class="search-popup"><div id="search-result"></div></div></header><article><div id="post-title"><h1>快速排序</h1></div><hr><div id="post-content"><p>快速排序是C.R.A.Hoare于1962年提出的一种划分交换排序。它采用了一种分治的策略，通常称其为分治法(Divide-and-ConquerMethod)。</p>
 <p>该方法的基本思想是：</p>
 <ul>
-<li>1．先从数列中取出一个数作为基准数。&#x2F;&#x2F;<em>一般是中间值</em></li>
+<li>1．先从数列中取出一个数作为基准数。//<em>一般是中间值</em></li>
 <li>2．分区过程，将比这个数大的数全放到它的右边，小于或等于它的数全放到它的左边。</li>
 <li>3．再对左右区间重复第二步，直到各区间只有一个数。</li>
 </ul>
 <p>并且快速排序还有一个比较简单的思想，就是递归。对于每一趟排序都是一样的思想，只不过需要进行排序的数组的范围越来越小了，使用递归实现这种排序最适合不过了。</p>
 <h2 id="快速排序的特点及性能"><a href="#快速排序的特点及性能" class="headerlink" title="快速排序的特点及性能"></a>快速排序的特点及性能</h2><p>快速排序是在冒泡排序的基础上改进而来的，冒泡排序每次只能交换相邻的两个元素，而快速排序是跳跃式的交换，交换的距离很大，因此总的比较和交换次数少了很多，速度也快了不少。  </p>
-<p>但是快速排序在最坏情况下的时间复杂度和冒泡排序一样，是 <code>O(n2)</code>，实际上每次比较都需要交换，但是这种情况并不常见。我们可以思考一下如果每次比较都需要交换，那么数列的平均时间复杂度是 <code>O(nlogn)</code>，事实上在大多数时候，排序的速度要快于这个平均时间复杂度。这种算法实际上是一种分治法思想，也就是分而治之，把问题分为一个个的小部分来分别解决，再把结果组合起来。  </p>
-<p>快速排序只是使用数组原本的空间进行排序，所以所占用的空间应该是常量级的，但是由于每次划分之后是递归调用，所以递归调用在运行的过程中会消耗一定的空间，在一般情况下的空间复杂度为 <code>O(logn)</code>，在最差的情况下，若每次只完成了一个元素，那么空间复杂度为 <code>O(n)</code>。所以我们一般认为快速排序的空间复杂度为 <code>O(logn)</code>。  </p>
+<p>但是快速排序在最坏情况下的时间复杂度和冒泡排序一样，是 <code>O(n2)</code>，实际上每次比较都需要交换，但是这种情况并不常见。我们可以思考一下如果每次比较都需要交换，那么数列的平均时间复杂度是 <code>O(nlogn)</code>，事实上在大多数时候，排序的速度要快于这个平均时间复杂度。这种算法实际上是一种分治法思想，也就是分而治之，把问题分为一个个的小部分来分别解决，再把结果组合起来。  </p>
+<p>快速排序只是使用数组原本的空间进行排序，所以所占用的空间应该是常量级的，但是由于每次划分之后是递归调用，所以递归调用在运行的过程中会消耗一定的空间，在一般情况下的空间复杂度为 <code>O(logn)</code>，在最差的情况下，若每次只完成了一个元素，那么空间复杂度为 <code>O(n)</code>。所以我们一般认为快速排序的空间复杂度为 <code>O(logn)</code>。  </p>
 <p>快速排序是一个不稳定的算法，在经过排序之后，可能会对相同值的元素的相对位置造成改变。  </p>
 <p>快速排序基本上被认为是相同数量级的所有排序算法中，平均性能最好的。</p>
-<h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><table>
+<h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><div class="table-container">
+<table>
 <thead>
 <tr>
-<th align="center">7</th>
-<th align="center">2</th>
-<th align="center">4</th>
-<th align="center">6</th>
-<th align="center">1</th>
-<th align="center">3</th>
-<th align="center">8</th>
-<th align="center">9</th>
-<th align="center">12</th>
-<th align="center">0</th>
+<th style="text-align:center">7</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">6</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">8</th>
+<th style="text-align:center">9</th>
+<th style="text-align:center">12</th>
+<th style="text-align:center">0</th>
 </tr>
 </thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
 </table>
+</div>
 <p>取数组的中间值作为基准值， 这组数据中取中间值1为基准值，</p>
-<p>设i&#x3D;1,j&#x3D;10,a[i]&#x3D;7,a[10]&#x3D;0,mid&#x3D;5,a[mid]&#x3D;1;</p>
-<p>寻找比中值(a[mid]&#x3D;1)大的数，即i&#x3D;1;接着寻找比中值小的数，即j&#x3D;10；</p>
-<p>将a[i&#x3D;1]&#x3D;7与a[j&#x3D;10]&#x3D;0交换，同时i++,j–，即此时i&#x3D;2,j&#x3D;9;此时数组为</p>
+<p>设i=1,j=10,a[i]=7,a[10]=0,mid=5,a[mid]=1;</p>
+<p>寻找比中值(a[mid]=1)大的数，即i=1;接着寻找比中值小的数，即j=10；</p>
+<p>将a[i=1]=7与a[j=10]=0交换，同时i++,j—，即此时i=2,j=9;此时数组为</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="center">0</th>
-<th align="center">2</th>
-<th align="center">4</th>
-<th align="center">6</th>
-<th align="center">1</th>
-<th align="center">3</th>
-<th align="center">8</th>
-<th align="center">9</th>
-<th align="center">12</th>
-<th align="center">7</th>
+<th style="text-align:center">0</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">6</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">8</th>
+<th style="text-align:center">9</th>
+<th style="text-align:center">12</th>
+<th style="text-align:center">7</th>
 </tr>
 </thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
 </table>
+</div>
 <p>因为i与j还未相遇，即i与J之间还可能存在需要交换的数字，重新进入循环，</p>
-<p>进入第二次交换时i&#x3D;2,j&#x3D;5,此时a[i]&#x3D;2与a[j]&#x3D;1交换，数组如下</p>
+<p>进入第二次交换时i=2,j=5,此时a[i]=2与a[j]=1交换，数组如下</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="center">0</th>
-<th align="center">1</th>
-<th align="center">4</th>
-<th align="center">6</th>
-<th align="center">2</th>
-<th align="center">3</th>
-<th align="center">8</th>
-<th align="center">9</th>
-<th align="center">12</th>
-<th align="center">7</th>
+<th style="text-align:center">0</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">6</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">8</th>
+<th style="text-align:center">9</th>
+<th style="text-align:center">12</th>
+<th style="text-align:center">7</th>
 </tr>
 </thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
 </table>
-<p>接着进行i++与j–；此时i&#x3D;3,j&#x3D;4;因为要寻找到不大于中值(即a[mid]&#x3D;1)的值，因此j–直到j&#x3D;2</p>
-<p>此时i&gt;&#x3D;j因此不进行交换且结束循环，进入递归；进入递归前可发现大于中值的在中值的右边，小于中值的在中值左边；</p>
-<p>记住此时的i&#x3D;3,j&#x3D;2;</p>
-<p>先从左边递归，即在i&#x3D;1和j&#x3D;2之间排列；中值为0；需要寻找大于或小于中值的数，此时i&#x3D;2,j&#x3D;1;说明不需要进行交换，并且此时i和j已经为这部分区间的边界，即这部分已经排列完成；</p>
-<p>接着返回上一步，从右边进行递归，即在i&#x3D;3和j&#x3D;10之间进行排列；</p>
-<p>取中值mid&#x3D;6，即a[mid]&#x3D;3;</p>
-<p>进行寻找大于和小于中值的值，即i&#x3D;3,j&#x3D;6,即a[i]&#x3D;4,a[j]&#x3D;3;交换a[i]与a[j]；此时数组如下</p>
+</div>
+<p>接着进行i++与j—；此时i=3,j=4;因为要寻找到不大于中值(即a[mid]=1)的值，因此j—直到j=2</p>
+<p>此时i&gt;=j因此不进行交换且结束循环，进入递归；进入递归前可发现大于中值的在中值的右边，小于中值的在中值左边；</p>
+<p>记住此时的i=3,j=2;</p>
+<p>先从左边递归，即在i=1和j=2之间排列；中值为0；需要寻找大于或小于中值的数，此时i=2,j=1;说明不需要进行交换，并且此时i和j已经为这部分区间的边界，即这部分已经排列完成；</p>
+<p>接着返回上一步，从右边进行递归，即在i=3和j=10之间进行排列；</p>
+<p>取中值mid=6，即a[mid]=3;</p>
+<p>进行寻找大于和小于中值的值，即i=3,j=6,即a[i]=4,a[j]=3;交换a[i]与a[j]；此时数组如下</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="center">0</th>
-<th align="center">1</th>
-<th align="center">3</th>
-<th align="center">6</th>
-<th align="center">2</th>
-<th align="center">4</th>
-<th align="center">8</th>
-<th align="center">9</th>
-<th align="center">12</th>
-<th align="center">7</th>
+<th style="text-align:center">0</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">6</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">8</th>
+<th style="text-align:center">9</th>
+<th style="text-align:center">12</th>
+<th style="text-align:center">7</th>
 </tr>
 </thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
 </table>
-<p>进行i++与j–，此时i&#x3D;4,j&#x3D;5；且此时a[i]与a[j]满足交换条件，进行交换，即</p>
+</div>
+<p>进行i++与j—，此时i=4,j=5；且此时a[i]与a[j]满足交换条件，进行交换，即</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="center">0</th>
-<th align="center">1</th>
-<th align="center">3</th>
-<th align="center">2</th>
-<th align="center">6</th>
-<th align="center">4</th>
-<th align="center">8</th>
-<th align="center">9</th>
-<th align="center">12</th>
-<th align="center">7</th>
+<th style="text-align:center">0</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">6</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">8</th>
+<th style="text-align:center">9</th>
+<th style="text-align:center">12</th>
+<th style="text-align:center">7</th>
 </tr>
 </thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
 </table>
-<p>进行i++与j–；此时i&#x3D;5,j&#x3D;4，退出循环；在l&#x3D;3(未排列数组的左边界)和j&#x3D;4之间进行递归</p>
+</div>
+<p>进行i++与j—；此时i=5,j=4，退出循环；在l=3(未排列数组的左边界)和j=4之间进行递归</p>
 <p>进行循环寻找，交换数值，此时数组如下</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="center">0</th>
-<th align="center">1</th>
-<th align="center">2</th>
-<th align="center">3</th>
-<th align="center">6</th>
-<th align="center">4</th>
-<th align="center">8</th>
-<th align="center">9</th>
-<th align="center">12</th>
-<th align="center">7</th>
+<th style="text-align:center">0</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">6</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">8</th>
+<th style="text-align:center">9</th>
+<th style="text-align:center">12</th>
+<th style="text-align:center">7</th>
 </tr>
 </thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
 </table>
+</div>
 <p>此时的i与j到达边界，返回上一步递归；</p>
-<p>进行右边的递归，即i&#x3D;5,j&#x3D;10；</p>
-<p>进行寻找，取中值mid&#x3D;7,a[mid]&#x3D;8,寻找大于小于中值的数，此时i&#x3D;7,j&#x3D;10,a[i]&#x3D;8,a[j]&#x3D;7;进行交换，数组如下</p>
+<p>进行右边的递归，即i=5,j=10；</p>
+<p>进行寻找，取中值mid=7,a[mid]=8,寻找大于小于中值的数，此时i=7,j=10,a[i]=8,a[j]=7;进行交换，数组如下</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="center">0</th>
-<th align="center">1</th>
-<th align="center">2</th>
-<th align="center">3</th>
-<th align="center">6</th>
-<th align="center">4</th>
-<th align="center">7</th>
-<th align="center">9</th>
-<th align="center">12</th>
-<th align="center">8</th>
+<th style="text-align:center">0</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">6</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">7</th>
+<th style="text-align:center">9</th>
+<th style="text-align:center">12</th>
+<th style="text-align:center">8</th>
 </tr>
 </thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
 </table>
-<p>进行i++与j–；此时i&#x3D;8,j&#x3D;9;寻找符合的i与j，最后i&#x3D;8,j&#x3D;7,不进行交换，进入递归；</p>
-<p>先左边递归，i&#x3D;5,j&#x3D;7;mid&#x3D;6,a[mid]&#x3D;4;</p>
-<p>进行交换时i&#x3D;5,j&#x3D;6;数组如下；</p>
+</div>
+<p>进行i++与j—；此时i=8,j=9;寻找符合的i与j，最后i=8,j=7,不进行交换，进入递归；</p>
+<p>先左边递归，i=5,j=7;mid=6,a[mid]=4;</p>
+<p>进行交换时i=5,j=6;数组如下；</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="center">0</th>
-<th align="center">1</th>
-<th align="center">2</th>
-<th align="center">3</th>
-<th align="center">4</th>
-<th align="center">6</th>
-<th align="center">7</th>
-<th align="center">9</th>
-<th align="center">12</th>
-<th align="center">8</th>
+<th style="text-align:center">0</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">6</th>
+<th style="text-align:center">7</th>
+<th style="text-align:center">9</th>
+<th style="text-align:center">12</th>
+<th style="text-align:center">8</th>
 </tr>
 </thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
 </table>
+</div>
 <p>到达边界，返回上一步；</p>
-<p>进行右边递归，i&#x3D;8,j&#x3D;10;取中值mid&#x3D;9,a[mid]&#x3D;12；</p>
-<p>进行交换时i&#x3D;9，j&#x3D;10；交换后如下</p>
+<p>进行右边递归，i=8,j=10;取中值mid=9,a[mid]=12；</p>
+<p>进行交换时i=9，j=10；交换后如下</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="center">0</th>
-<th align="center">1</th>
-<th align="center">2</th>
-<th align="center">3</th>
-<th align="center">4</th>
-<th align="center">6</th>
-<th align="center">7</th>
-<th align="center">9</th>
-<th align="center">8</th>
-<th align="center">12</th>
+<th style="text-align:center">0</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">6</th>
+<th style="text-align:center">7</th>
+<th style="text-align:center">9</th>
+<th style="text-align:center">8</th>
+<th style="text-align:center">12</th>
 </tr>
 </thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
 </table>
-<p>i++和j–后，i&#x3D;10,j&#x3D;9；接着推出循环。左边递归；</p>
-<p>此时i&#x3D;8,j&#x3D;9;取中值mid&#x3D;8,a[mid]&#x3D;9寻找相应数，进行交换，此时i&#x3D;8,j&#x3D;9;交换后</p>
+</div>
+<p>i++和j—后，i=10,j=9；接着推出循环。左边递归；</p>
+<p>此时i=8,j=9;取中值mid=8,a[mid]=9寻找相应数，进行交换，此时i=8,j=9;交换后</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="center">0</th>
-<th align="center">1</th>
-<th align="center">2</th>
-<th align="center">3</th>
-<th align="center">4</th>
-<th align="center">6</th>
-<th align="center">7</th>
-<th align="center">8</th>
-<th align="center">9</th>
-<th align="center">12</th>
+<th style="text-align:center">0</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">6</th>
+<th style="text-align:center">7</th>
+<th style="text-align:center">8</th>
+<th style="text-align:center">9</th>
+<th style="text-align:center">12</th>
 </tr>
 </thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
 </table>
+</div>
 <p>排列完成，结束退出；</p>
-<h3 id="具体代码（C语言）"><a href="#具体代码（C语言）" class="headerlink" title="具体代码（C语言）"></a>具体代码（C语言）</h3><p>#include &lt;stdio.h&gt;<br>int a[1024];<br>void Quick_Sort(int l,int r){<br>    int i,j,mid,p;<br>    i&#x3D;l,j&#x3D;r,mid&#x3D;a[(l+r)&#x2F;2];<br>    do{<br>        while(a[i]&lt;mid)i++;<br>        while(a[j]&gt;mid)j–;<br>        if(i&lt;&#x3D;j){<br>            p&#x3D;a[i],a[i]&#x3D;a[j],a[j]&#x3D;p;<br>            i++,j–;<br>        }<br>    }while(i&lt;&#x3D;j);<br>    if(l&lt;j)ch(l,j);<br>    if(i&lt;r)ch(i,r);<br>}<br>int main(){<br>    int n;<br>    printf(“输入要输入的数的数量\n”);<br>    scanf(“%d”,&amp;n);<br>    printf(“输入数字\n”);<br>     for(int i&#x3D;1;i&lt;&#x3D;n;i++)scanf(“%d”,&amp;a[i]);<br>    Quick_Sort(1,n);<br>     for(int i&#x3D;1;i&lt;&#x3D;n;i++){<br>         printf(“%d “,a[i]);<br>     }<br>     return 0;<br>}</p>
-<div id="paginator"></div></div><div id="post-footer"></div><div id="Valine"></div><div id="bottom-btn"><a id="to-index" href="#toc-div" title="index">≡</a><a id="to-top" onClick="scrolls.scrolltop();" title="to top" style="opacity: 0; display: none;">∧</a></div></article><aside><div id="aside-top"><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/3226021048XTC">Dr.落叶潇潇</a></h1><div id="description"><p>感</p><p>染</p><p>者</p><p>应</p><p>该</p><p>为</p><p>自</p><p>己</p><p>的</p><p>身</p><p>份</p><p>而</p><p>骄</p><p>傲</p><p>，</p><p>并</p><p>用</p><p>最</p><p>简</p><p>单</p><p>的</p><p>手</p><p>段</p><p>夺</p><p>取</p><p>大</p><p>地</p><p>的</p><p>公</p><p>正</p></div></div><div id="aside-block"><div id="toc-div"><h1>INDEX</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%9A%84%E7%89%B9%E7%82%B9%E5%8F%8A%E6%80%A7%E8%83%BD"><span class="toc-number">1.</span> <span class="toc-text">快速排序的特点及性能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E4%BB%A3%E7%A0%81%EF%BC%88C%E8%AF%AD%E8%A8%80%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">具体代码（C语言）</span></a></li></ol></li></ol></div></div></div><footer><nobr><span class="text-title">ICP</span><a class="text-content" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">罗德岛：R111</a></nobr><nobr>published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknight</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><div id="cursor-container"><div id="cursor-outer"></div><div id="cursor-effect"></div></div><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{new Valine({
+<h3 id="具体代码（C语言）"><a href="#具体代码（C语言）" class="headerlink" title="具体代码（C语言）"></a>具体代码（C语言）</h3><h1 id="include"><a href="#include" class="headerlink" title="include "></a>include <stdio.h></h1><p>int a[1024];<br>void Quick_Sort(int l,int r){<br>    int i,j,mid,p;<br>    i=l,j=r,mid=a[(l+r)/2];<br>    do{<br>        while(a[i]<mid)i++;
+        while(a[j]>mid)j—;<br>        if(i&lt;=j){<br>            p=a[i],a[i]=a[j],a[j]=p;<br>            i++,j—;<br>        }<br>    }while(i&lt;=j);<br>    if(l&lt;j)ch(l,j);<br>    if(i&lt;r)ch(i,r);<br>}<br>int main(){<br>    int n;<br>    printf(“输入要输入的数的数量\n”);<br>    scanf(“%d”,&amp;n);<br>    printf(“输入数字\n”);<br>     for(int i=1;i&lt;=n;i++)scanf(“%d”,&amp;a[i]);<br>    Quick_Sort(1,n);<br>     for(int i=1;i&lt;=n;i++){<br>         printf(“%d “,a[i]);<br>     }<br>     return 0;<br>}</p>
+<div id="paginator"></div></div><div id="post-footer"></div><div id="Valine"></div><div id="bottom-btn"><a id="to-index" href="#toc-div" title="index">≡</a><a id="to-top" onClick="scrolls.scrolltop();" title="to top" style="opacity: 0; display: none;">∧</a></div></article><aside><div id="aside-top"><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/3226021048XTC">Dr.落叶潇潇</a></h1><div id="description"><p>感</p><p>染</p><p>者</p><p>应</p><p>该</p><p>为</p><p>自</p><p>己</p><p>的</p><p>身</p><p>份</p><p>而</p><p>骄</p><p>傲</p><p>，</p><p>并</p><p>用</p><p>最</p><p>简</p><p>单</p><p>的</p><p>手</p><p>段</p><p>夺</p><p>取</p><p>大</p><p>地</p><p>的</p><p>公</p><p>正</p></div></div><div id="aside-block"><div id="toc-div"><h1>INDEX</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%9A%84%E7%89%B9%E7%82%B9%E5%8F%8A%E6%80%A7%E8%83%BD"><span class="toc-number">1.</span> <span class="toc-text">快速排序的特点及性能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E4%BB%A3%E7%A0%81%EF%BC%88C%E8%AF%AD%E8%A8%80%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">具体代码（C语言）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include"><span class="toc-number"></span> <span class="toc-text">include </span></a></div></div></div><footer><nobr><span class="text-title">ICP</span><a class="text-content" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">罗德岛：R111</a></nobr><nobr>published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknight</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><div id="cursor-container"><div id="cursor-outer"></div><div id="cursor-effect"></div></div><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{new Valine({
  el: '#Valine'
  , appId: 'LSe7mf1XYliLqgIrc3jlqXfT-gzGzoHsz'
  , appKey: 'Fu9giJfnidkCamaW89FUpidw' , placeholder: '此条评论委托企鹅物流发送'

@@ -9,15 +9,14 @@
  font-family: 'JetBrains Mono';
  src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
 }</style><meta name="generator" content="Hexo 6.3.0"></head><body style="background-image:url(https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg);"><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><ol class="navContent"><li class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></li><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/demo/"><span class="navItemTitle">独立页面</span></a></li></ol></nav><div class="search-popup"><div id="search-result"></div></div></header><article><div id="post-title"><h1>指针与数组</h1></div><hr><div id="post-content"><h1 id="一-指针与数组"><a href="#一-指针与数组" class="headerlink" title="一.指针与数组"></a>一.指针与数组</h1><ol>
-<li><p>数组是一块连续的内存单元，其中数组名的值就是这块连续内存的首地址；一个指针变量既可以指向一个数组，也可以指向一个数组元素；比如：指针变量p&#x3D;a与a与&amp;a[0]的值是一样的，都指向数组a的首地址，也是0号元素，a[0]的地址；p+1,a+1,&amp;a[1]都指向1号元素，类似可得p+i，a+i，&amp;a[i]指向i号元素；应注意指针是变量，数组名和数组元素是常量；</p>
+<li><p>数组是一块连续的内存单元，其中数组名的值就是这块连续内存的首地址；一个指针变量既可以指向一个数组，也可以指向一个数组元素；比如：指针变量p=a与a与&amp;a[0]的值是一样的，都指向数组a的首地址，也是0号元素，a[0]的地址；p+1,a+1,&amp;a[1]都指向1号元素，类似可得p+i，a+i，&amp;a[i]指向i号元素；应注意指针是变量，数组名和数组元素是常量；</p>
 </li>
-<li><p>引入指针后可用*(p+i)的形式访问数组a[i]的元素，下标法：通过p[i]访问a[i]的元素；指针法：*(p+i)访问a[i]的元素；</p>
+<li><p>引入指针后可用<em>(p+i)的形式访问数组a[i]的元素，下标法：通过p[i]访问a[i]的元素；指针法：</em>(p+i)访问a[i]的元素；</p>
 </li>
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">int a[5],*p=a<br>for(int i=1;i&lt;=5;i++)&#123;<br>    scanf(&quot;%d&quot;,&amp;a[i]);//a[i]与a+i和p+i等价；<br>&#125;<br>for(int i=1;i&lt;=5;i++)&#123;<br>    printf(&quot;%d&quot;,a[i]);//a[i]与*(p+i),*(a+i),p[i]等价<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>把a当指针用，a+i指向第i个元素；注意a是静态常量，是不可变的，指针是变量，可以变化，如p&#x3D;p+1是合法的，a&#x3D;a+1是非法的；</p>
-<ol start="3">
+<p>把a当指针用，a+i指向第i个元素；注意a是静态常量，是不可变的，指针是变量，可以变化，如p=p+1是合法的，a=a+1是非法的；</p>
+<ol>
 <li>指针也可以看出数组名；</li>
 </ol>
 <p>指针是可以作为动态数组进行使用的，因为指针可以动态申请空间，且如果一次性申请多个变量空间，则系统给的空间则是连续的，这种情况下便可以当成数组进行操作；</p>

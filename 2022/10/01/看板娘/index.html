@@ -9,28 +9,23 @@
  font-family: 'JetBrains Mono';
  src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
 }</style><meta name="generator" content="Hexo 6.3.0"></head><body style="background-image:url(https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg);"><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><ol class="navContent"><li class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></li><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/demo/"><span class="navItemTitle">独立页面</span></a></li></ol></nav><div class="search-popup"><div id="search-result"></div></div></header><article><div id="post-title"><h1>看板娘</h1></div><hr><div id="post-content"><h2 id="一、安装hexo-helper-live2d-插件"><a href="#一、安装hexo-helper-live2d-插件" class="headerlink" title="一、安装hexo-helper-live2d 插件"></a>一、安装hexo-helper-live2d 插件</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">npm install --save hexo-helper-live2d<br></code></pre></td></tr></table></figure>
-
 <h2 id="二、下载live2d模型"><a href="#二、下载live2d模型" class="headerlink" title="二、下载live2d模型"></a>二、下载live2d模型</h2><p>下面给出看板娘模型的名单和预览图，你可以挑一个想要的</p>
-<p>预览图：<a href="https://link.zhihu.com/?target=https://huaji8.top/post/live2d-plugin-2.0/">https://huaji8.top/post/live2d-plugin-2.0/</a></p>
+<p>预览图：<a href="https://link.zhihu.com/?target=https%3A//huaji8.top/post/live2d-plugin-2.0/">https://huaji8.top/post/live2d-plugin-2.0/</a></p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs text">live2d-widget-model-chitose<br>live2d-widget-model-epsilon2_1<br>live2d-widget-model-gf<br>live2d-widget-model-haru/01 (use npm install --save live2d-widget-model-haru)<br>live2d-widget-model-haru/02 (use npm install --save live2d-widget-model-haru)<br>live2d-widget-model-haruto<br>live2d-widget-model-hibiki<br>live2d-widget-model-hijiki<br>live2d-widget-model-izumi<br>live2d-widget-model-koharu<br>live2d-widget-model-miku<br>live2d-widget-model-ni-j<br>live2d-widget-model-nico<br>live2d-widget-model-nietzsche<br>live2d-widget-model-nipsilon<br>live2d-widget-model-nito<br>live2d-widget-model-shizuku<br>live2d-widget-model-tororo<br>live2d-widget-model-tsumiki<br>live2d-widget-model-unitychan<br>live2d-widget-model-wanko<br>live2d-widget-model-z16<br></code></pre></td></tr></table></figure>
-
 <p>然后执行指令↓</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">npm install live2d-widget-model-koharu //假设你选择的看板娘是koharu<br></code></pre></td></tr></table></figure>
-
 <h2 id="三、修改-config-yml配置文件"><a href="#三、修改-config-yml配置文件" class="headerlink" title="三、修改_config.yml配置文件"></a>三、修改_config.yml配置文件</h2><p>找到你博客的本地存储的根目录，打开_config.yml文件，添加下面的内容</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs text">#Live2D动画<br>live2d:<br>  enable: true<br>  scriptFrom: local<br>  pluginRootPath: live2dw/<br>  pluginJsPath: lib/<br>  pluginModelPath: assets/<br>  tagMode: false<br>  debug: false<br>  model:<br>    use: live2d-widget-model-koharu <br>  display:<br>    position: right <br>    width: 150<br>    height: 300<br>  mobile:<br>    show: true<br></code></pre></td></tr></table></figure>
-
 <h2 id="四、主要参数说明"><a href="#四、主要参数说明" class="headerlink" title="四、主要参数说明"></a>四、主要参数说明</h2><ol>
-<li>enable &#x2F;&#x2F;是否使用</li>
-<li>model:<br>use: live2d-widget-model-koharu &#x2F;&#x2F;要使用的模型名称</li>
-<li>display:<br>position: right &#x2F;&#x2F;显示的位置<br>width: 150 &#x2F;&#x2F;宽度<br>height: 150 &#x2F;&#x2F;高度<br>mobile:<br>show: true &#x2F;&#x2F;移动端是否显示</li>
+<li>enable //是否使用</li>
+<li>model:<br>use: live2d-widget-model-koharu //要使用的模型名称</li>
+<li>display:<br>position: right //显示的位置<br>width: 150 //宽度<br>height: 150 //高度<br>mobile:<br>show: true //移动端是否显示</li>
 </ol>
 <h2 id="五、调试-amp-部署"><a href="#五、调试-amp-部署" class="headerlink" title="五、调试&amp;部署"></a>五、调试&amp;部署</h2><p>在你已经安装git环境的基础上，在博客的本地存储根目录下右键-&gt;Git Bash Here</p>
 <p>依次输入↓</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">hexo clean<br>hexo g<br>hexo s<br></code></pre></td></tr></table></figure>
-
 <p>现在你就可以在本地预览一下自己的博客精灵啦，打开浏览器登录：<strong>localhost:4000</strong></p>
-<p>或者，<a href="https://link.zhihu.com/?target=http://localhost:4000/">点击这里</a>~</p>
+<p>或者，<a href="https://link.zhihu.com/?target=http%3A//localhost%3A4000/">点击这里</a>~</p>
 <p>相中好看板娘之后，就可以部署到GitHub pages上了</p>
 <p>回到git，输入下面的指令并成功登录后…</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">hexo d<br></code></pre></td></tr></table></figure>
