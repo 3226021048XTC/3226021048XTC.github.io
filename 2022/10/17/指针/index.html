@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>指针 | Hexo</title><script src="//unpkg.com/valine/dist/Valine.min.js"></script><script>var config = {"root":"/","path":""}</script><script src="//unpkg.com/mermaid@8.13.5/dist/mermaid.min.js"></script><script>mermaid.initialize({
+ startOnLoad: true
+ , theme: 'dark'
+});</script><link rel="stylesheet" href="/css/arknights.css"><link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.4.0/styles/atom-one-dark-reasonable.min.css"><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 6.3.0"></head><body style="background-image:url(https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg);"><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><ol class="navContent"><li class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></li><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/demo/"><span class="navItemTitle">独立页面</span></a></li></ol></nav><div class="search-popup"><div id="search-result"></div></div></header><article><div id="post-title"><h1>指针</h1></div><hr><div id="post-content"><h1 id="一-指针简介"><a href="#一-指针简介" class="headerlink" title="一.指针简介"></a>一.指针简介</h1><p>在C语言中，数据结构存储于内存空间中，而内存空间实际是一组由有序字节组成的数组，有序字节即为这些数据结构的地址名，指针的便是保存数据结构的地址的变量，通过指针便可以更方便地对这些数据结构进行操作。</p>
+<h1 id="二-指针变量"><a href="#二-指针变量" class="headerlink" title="二.指针变量"></a>二.指针变量</h1><p>和一般变量相同，指针变量先进行定义再使用；</p>
+<p>一般形式为：</p>
+<p>*类型说明符   <em>变量名；</em></p>
+<p>其中，*表示这是一个指针变量，变量名即为定义的指针变量名，类型说明符表示该指针变量所指向的变量的数据类型；</p>
+<ol>
+<li><p>普通变量的定义：定义一个普通变量，在内存空间中有一块空间存储着这个变量的值，这块空间的位置叫做地址，可以用地址操作符&amp;对变量进行操作；</p>
+</li>
+<li><p>指针变量的定义：如:int *p&#x3D;NULL，这里定义一个指针变量，里面存储着一个地址，现在赋值为NULL(其实就是0，表示特殊的空地址)；</p>
+</li>
+<li><p>给指针变量赋值：如：p&#x3D;&amp;a 即把a的地址赋值给p，显然直接对p的存取操作的是地址 ，通过这个地址间接操作的才是普通变量(a)。</p>
+</li>
+</ol>
+<p>赋值的方式：</p>
+<p>int *p&#x3D;&amp;a;  或 int *p;p&#x3D;&amp;a;</p>
+<p>注意不能把一个数赋予指针变量，被赋值的指针变量前不能再加“*”说明符</p>
+<table>
+<thead>
+<tr>
+<th align="center">说明</th>
+<th align="center">例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">定义</td>
+<td align="center">int a&#x3D;10;  int *p;</td>
+</tr>
+<tr>
+<td align="center">赋值</td>
+<td align="center">p&#x3D;&amp;a;</td>
+</tr>
+<tr>
+<td align="center">间接运算</td>
+<td align="center">*p&#x3D;10;</td>
+</tr>
+<tr>
+<td align="center">指针变量直接存储的是地址</td>
+<td align="center">cout&lt;&lt;p; 结果可能是地址的值</td>
+</tr>
+<tr>
+<td align="center">指针变量间接存储的是变量值</td>
+<td align="center">cout&lt;&lt;*p;  结果是10</td>
+</tr>
+</tbody></table>
+<h1 id="三-指针的引用和运算"><a href="#三-指针的引用和运算" class="headerlink" title="三.指针的引用和运算"></a>三.指针的引用和运算</h1><ol>
+<li>初始化：对于定义的局部指针变量，因为其内容是随机的，直接进行操作可能会破坏程序和系统内存的值，引发不可预测的错误，所以在编程中要保证先初始化或者赋值，给与正确的地址再进行使用和操作；</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>int *p&#x3D;NULL</td>
+<td>NULL是特殊的地址0，叫零指针</td>
+</tr>
+<tr>
+<td>2</td>
+<td>int *p&#x3D;&amp;a</td>
+<td>p初始化为a的地址</td>
+</tr>
+<tr>
+<td>3</td>
+<td>int *p&#x3D;new(int)</td>
+<td>申请一个空间给p，*p的内容不确定</td>
+</tr>
+</tbody></table>
+<ol start="2">
+<li>指针变量的+与-：因为指针变量的内容是地址，其有加与减两种常用的运算，这两个运算一般与数组进行使用操作；</li>
+</ol>
+<p>特别说明，在指针变量中“p++”的意思是“广义的加1”，不是p的值(地址)加1，而是根据类型的不同增加一个sizeof(类型)，即跳过一个数据空间，达到下一个数据空间；</p>
+<ol start="3">
+<li>多重指针:指针本身也是一种类型，即指针能够指向指针；</li>
+</ol>
+<div id="paginator"></div></div><div id="post-footer"></div><div id="Valine"></div><div id="bottom-btn"><a id="to-index" href="#toc-div" title="index">≡</a><a id="to-top" onClick="scrolls.scrolltop();" title="to top" style="opacity: 0; display: none;">∧</a></div></article><aside><div id="aside-top"><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/3226021048XTC">Dr.落叶潇潇</a></h1><div id="description"><p>感</p><p>染</p><p>者</p><p>应</p><p>该</p><p>为</p><p>自</p><p>己</p><p>的</p><p>身</p><p>份</p><p>而</p><p>骄</p><p>傲</p><p>，</p><p>并</p><p>用</p><p>最</p><p>简</p><p>单</p><p>的</p><p>手</p><p>段</p><p>夺</p><p>取</p><p>大</p><p>地</p><p>的</p><p>公</p><p>正</p></div></div><div id="aside-block"><div id="toc-div"><h1>INDEX</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80-%E6%8C%87%E9%92%88%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">一.指针简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C-%E6%8C%87%E9%92%88%E5%8F%98%E9%87%8F"><span class="toc-number">2.</span> <span class="toc-text">二.指针变量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89-%E6%8C%87%E9%92%88%E7%9A%84%E5%BC%95%E7%94%A8%E5%92%8C%E8%BF%90%E7%AE%97"><span class="toc-number">3.</span> <span class="toc-text">三.指针的引用和运算</span></a></li></ol></div></div></div><footer><nobr><span class="text-title">ICP</span><a class="text-content" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">罗德岛：R111</a></nobr><nobr>published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknight</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><div id="cursor-container"><div id="cursor-outer"></div><div id="cursor-effect"></div></div><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{new Valine({
+ el: '#Valine'
+ , appId: 'LSe7mf1XYliLqgIrc3jlqXfT-gzGzoHsz'
+ , appKey: 'Fu9giJfnidkCamaW89FUpidw' , placeholder: '此条评论委托企鹅物流发送'
+});code.findCode();mermaid.init(undefined, ('.mermaid'));}</script><script src="//unpkg.com/@highlightjs/cdn-assets@11.4.0/highlight.min.js"></script><script src="/js/arknights.js"></script><script>window.addEventListener("load",()=>{reset()})</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/z16.model.json"},"display":{"position":"left","width":300,"height":600,"hOffset":-15,"vOffset":-15},"mobile":{"show":false},"react":{"opacity":0.7},"log":false});</script></body></html>
