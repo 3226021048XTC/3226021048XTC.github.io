@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>指针动态数组（1） | Hexo</title><script src="//unpkg.com/valine/dist/Valine.min.js"></script><script>var config = {"root":"/","path":""}</script><script src="//unpkg.com/mermaid@8.13.5/dist/mermaid.min.js"></script><script>mermaid.initialize({
+ startOnLoad: true
+ , theme: 'dark'
+});</script><link rel="stylesheet" href="/css/arknights.css"><link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.4.0/styles/atom-one-dark-reasonable.min.css"><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 6.3.0"></head><body style="background-image:url(https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg);"><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><ol class="navContent"><li class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></li><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/demo/"><span class="navItemTitle">独立页面</span></a></li></ol></nav><div class="search-popup"><div id="search-result"></div></div></header><article><div id="post-title"><h1>指针动态数组（1）</h1></div><hr><div id="post-content"><h1 id="malloc函数"><a href="#malloc函数" class="headerlink" title="malloc函数"></a>malloc函数</h1><ol>
+<li><p>头文件：#include <malloc.h>；</p>
+</li>
+<li><p>使用：(void <em>)malloc(sizeof(void)</em>num);</p>
+</li>
+</ol>
+<p>其中void指示类型，sizeof是计算一个这个类型需要的字节，*num表示需要多少个这个类型的字节的空间，malloc后面的括号内也可以直接用数字填入，表示需要多少个字节的空间；</p>
+<ol>
+<li><p>成功返回分配空间的首地址，不成功则返回空指针NULL；</p>
+</li>
+<li><p>当内存不再使用时应使用free()函数将内存块释放掉；</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">#include&lt;malloc.h&gt;<br>int *a;<br>int n;<br>a=(int *)malloc(sizeof(int)*n)<br></code></pre></td></tr></table></figure>
+<h1 id="free函数"><a href="#free函数" class="headerlink" title="free函数"></a>free函数</h1><ol>
+<li><p>头文件：free函数头文件和malloc函数一致，即<malloc.h>;</p>
+</li>
+<li><p>使用：free(a);a=NULL;</p>
+</li>
+</ol>
+<p>free后要将指针指向NULL，避免成为野指针；因为free是将指针所指向的那片内存清除，但是指针所指向的地址仍然是相同的，如果不对指针进行处理，指针将会成为野指针；</p>
+<h1 id="calloc函数"><a href="#calloc函数" class="headerlink" title="calloc函数"></a>calloc函数</h1><ol>
+<li><p>头文件：#include<stdlib.h>或者#include <malloc.h>;</p>
+</li>
+<li><p>使用:(void *)calloc(num,sizeof(void));</p>
+</li>
+</ol>
+<p>calloc函数与free函数配套使用，calloc函数与malloc函数几乎相同，返回类型为空指针；</p>
+<p>num表示需要的空间类型的数量，void表示需要的类型，</p>
+<ol>
+<li>区别:malloc的使用效率更加高，因为callloc函数在申请动态空间时会将每一个字节都初始化为0；</li>
+</ol>
+<h1 id="realloc函数"><a href="#realloc函数" class="headerlink" title="realloc函数"></a>realloc函数</h1><ol>
+<li><p>头文件:#include<stdio.h>或者#include <malloc.h></p>
+</li>
+<li><p>使用:(void <em>)realloc(指针,num </em>sizeof(int)；</p>
+</li>
+<li><p>介绍:realloc是对动态内存进行扩容(即已经申请的动态空间不够使用，需要进行扩容，指针为原来的空间地址的指针，num为扩容后的大小；</p>
+</li>
+</ol>
+<p>实际上如果num比较小，即原空间后面还有空余的内存空间，并且原空间加上空闲空间等于num，则系统将直接在原内存空间后面扩容，<strong>并返回原动态空间地址</strong>；如果num比较大，原来申请的空间后面没有足够大的空间扩容，系统将重新申请一块(num<em>sizeof(void))的内存，并把原来空间的内容拷贝过去，原来空间进行free操作，因此原空间不需要进行free操作，<strong>同时返回寻找到的空间的地址</strong>;如果num非常大，系统内存申请失败，<em>*返回NULL</em></em>,原来的内存不会释放。</p>
+<p>注意：(1)如果扩容后的内存空间比原空间小，将会出现数据丢失，如果直接realloc(p, 0);相当于free(p);</p>
+<p>(2)若realloc成功，指向原内存地址的指针就成了<strong>悬挂指针</strong>，即指针指向了一块没有分配给用户使用的内存，如果再用该指针进行操作就可能发生意想不到的问题。所以在应用realloc是应当格外注意这种情况;</p>
+<p>(3)传递给realloc的[指针必须是先前通过malloc,calloc 或realloc()分配的;</p>
+<p>(4)传递的指针可以为空，等同于malloc;</p>
+<p><del>ps:还有new与delete函数，累了下次写；</del></p>
+<div id="paginator"></div></div><div id="post-footer"></div><div id="Valine"></div><div id="bottom-btn"><a id="to-index" href="#toc-div" title="index">≡</a><a id="to-top" onClick="scrolls.scrolltop();" title="to top" style="opacity: 0; display: none;">∧</a></div></article><aside><div id="aside-top"><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/3226021048XTC">Dr.落叶潇潇</a></h1><div id="description"><p>感</p><p>染</p><p>者</p><p>应</p><p>该</p><p>为</p><p>自</p><p>己</p><p>的</p><p>身</p><p>份</p><p>而</p><p>骄</p><p>傲</p><p>，</p><p>并</p><p>用</p><p>最</p><p>简</p><p>单</p><p>的</p><p>手</p><p>段</p><p>夺</p><p>取</p><p>大</p><p>地</p><p>的</p><p>公</p><p>正</p></div></div><div id="aside-block"><div id="toc-div"><h1>INDEX</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#malloc%E5%87%BD%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text">malloc函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#free%E5%87%BD%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text">free函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#calloc%E5%87%BD%E6%95%B0"><span class="toc-number">3.</span> <span class="toc-text">calloc函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#realloc%E5%87%BD%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">realloc函数</span></a></li></ol></div></div></div><footer><nobr><span class="text-title">ICP</span><a class="text-content" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">罗德岛：R111</a></nobr><nobr>published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknight</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><div id="cursor-container"><div id="cursor-outer"></div><div id="cursor-effect"></div></div><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{new Valine({
+ el: '#Valine'
+ , appId: 'LSe7mf1XYliLqgIrc3jlqXfT-gzGzoHsz'
+ , appKey: 'Fu9giJfnidkCamaW89FUpidw' , placeholder: '此条评论委托企鹅物流发送'
+});code.findCode();mermaid.init(undefined, ('.mermaid'));}</script><script src="//unpkg.com/@highlightjs/cdn-assets@11.4.0/highlight.min.js"></script><script src="/js/arknights.js"></script><script>window.addEventListener("load",()=>{reset()})</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/z16.model.json"},"display":{"position":"left","width":300,"height":600,"hOffset":-15,"vOffset":-15},"mobile":{"show":false},"react":{"opacity":0.7},"log":false});</script></body></html>

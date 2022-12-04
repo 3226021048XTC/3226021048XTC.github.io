@@ -1,0 +1,34 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>指针动态数组(2) | Hexo</title><script src="//unpkg.com/valine/dist/Valine.min.js"></script><script>var config = {"root":"/","path":""}</script><script src="//unpkg.com/mermaid@8.13.5/dist/mermaid.min.js"></script><script>mermaid.initialize({
+ startOnLoad: true
+ , theme: 'dark'
+});</script><link rel="stylesheet" href="/css/arknights.css"><link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.4.0/styles/atom-one-dark-reasonable.min.css"><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 6.3.0"></head><body style="background-image:url(https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg);"><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><ol class="navContent"><li class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></li><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/demo/"><span class="navItemTitle">独立页面</span></a></li></ol></nav><div class="search-popup"><div id="search-result"></div></div></header><article><div id="post-title"><h1>指针动态数组(2)</h1></div><hr><div id="post-content"><h1 id="new函数-分配空间"><a href="#new函数-分配空间" class="headerlink" title="new函数(分配空间)"></a>new函数(分配空间)</h1><p>使用格式:</p>
+<pre><code> (1)指针变量名=new 类型标识符；
+ (2)指针变量名=new 类型标识符(初始值)；
+ (3)指针变量吗=new 类型标识符[内存单元个数]；
+</code></pre><p>对于(1)申请<strong>一个</strong>类型标识符大小的字节空间给指针变量名，对于(2)在申请<strong>一个</strong>类型标识符的同时对申请的空间进行赋予初始值，而对于(3)则是申请一个动态数组；</p>
+<p>其中分配成功则返回对象类型的指针地址，失败会抛出异常；</p>
+<h1 id="delete函数-对于上面的new函数"><a href="#delete函数-对于上面的new函数" class="headerlink" title="delete函数(对于上面的new函数)"></a>delete函数(对于上面的new函数)</h1><p>delete函数用于回收new函数分配的内存空间</p>
+<p>其中对于单个对象的内存空间的时候用<strong>delete 指针变量名</strong> 释放空间；</p>
+<p>对于用new[]分配的一组内存空间，用<strong>delete []指针变量名</strong> 释放空间；</p>
+<h1 id="new函数与malloc函数的一些区别"><a href="#new函数与malloc函数的一些区别" class="headerlink" title="new函数与malloc函数的一些区别"></a>new函数与malloc函数的一些区别</h1><ol>
+<li><p>new是从自由存储区上动态分配空间，而malloc函数则是在堆上动态分配空间；其中自由存储区是C++的一个基于new操作符的抽象概念，即通过new函数动态申请的空间内存都为自由存储区；堆是系统的术语，是系统维护的一块特殊内存，用于内存的动态分配；关于自由存储区，不仅可以是堆，也可以是静态存储区，这取决于operator new将对象分配到哪个空间<del>(ps:目前我也不懂，以后再了解学习，嘻嘻)</del>；</p>
+</li>
+<li><p>分配成功时new返回不需要进行强制类型转换，malloc返回的时void*，需要进行强制转换类型，基于这一点new函数的安全性高于malloc函数；</p>
+</li>
+<li><p>分配失败时malloc函数返回NULL，而new函数直接抛出程序异常；</p>
+</li>
+<li><p>对于申请的内存空间大小，malloc函数需要进行计算，而new函数无需指定内存空间大小，系统会根据类型信息自行计算；</p>
+</li>
+</ol>
+<div id="paginator"></div></div><div id="post-footer"></div><div id="Valine"></div><div id="bottom-btn"><a id="to-index" href="#toc-div" title="index">≡</a><a id="to-top" onClick="scrolls.scrolltop();" title="to top" style="opacity: 0; display: none;">∧</a></div></article><aside><div id="aside-top"><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/3226021048XTC">Dr.落叶潇潇</a></h1><div id="description"><p>感</p><p>染</p><p>者</p><p>应</p><p>该</p><p>为</p><p>自</p><p>己</p><p>的</p><p>身</p><p>份</p><p>而</p><p>骄</p><p>傲</p><p>，</p><p>并</p><p>用</p><p>最</p><p>简</p><p>单</p><p>的</p><p>手</p><p>段</p><p>夺</p><p>取</p><p>大</p><p>地</p><p>的</p><p>公</p><p>正</p></div></div><div id="aside-block"><div id="toc-div"><h1>INDEX</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#new%E5%87%BD%E6%95%B0-%E5%88%86%E9%85%8D%E7%A9%BA%E9%97%B4"><span class="toc-number">1.</span> <span class="toc-text">new函数(分配空间)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#delete%E5%87%BD%E6%95%B0-%E5%AF%B9%E4%BA%8E%E4%B8%8A%E9%9D%A2%E7%9A%84new%E5%87%BD%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text">delete函数(对于上面的new函数)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#new%E5%87%BD%E6%95%B0%E4%B8%8Emalloc%E5%87%BD%E6%95%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%8C%BA%E5%88%AB"><span class="toc-number">3.</span> <span class="toc-text">new函数与malloc函数的一些区别</span></a></li></ol></div></div></div><footer><nobr><span class="text-title">ICP</span><a class="text-content" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">罗德岛：R111</a></nobr><nobr>published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknight</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><div id="cursor-container"><div id="cursor-outer"></div><div id="cursor-effect"></div></div><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{new Valine({
+ el: '#Valine'
+ , appId: 'LSe7mf1XYliLqgIrc3jlqXfT-gzGzoHsz'
+ , appKey: 'Fu9giJfnidkCamaW89FUpidw' , placeholder: '此条评论委托企鹅物流发送'
+});code.findCode();mermaid.init(undefined, ('.mermaid'));}</script><script src="//unpkg.com/@highlightjs/cdn-assets@11.4.0/highlight.min.js"></script><script src="/js/arknights.js"></script><script>window.addEventListener("load",()=>{reset()})</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/z16.model.json"},"display":{"position":"left","width":300,"height":600,"hOffset":-15,"vOffset":-15},"mobile":{"show":false},"react":{"opacity":0.7},"log":false});</script></body></html>
