@@ -103,7 +103,7 @@ theme: arknights
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
     type: git
-    repository: https://github.com/3226021048XTC/yetiandi.github.io.git
+    repository: https://github.com/3226021048XTC/3226021048XTC.github.io.git
     branch: main
 live2d:
   enable: true  # 是否启动
