@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>汇编语言note.1 | Hexo</title><script src="//unpkg.com/valine/dist/Valine.min.js"></script><script>var config = {"root":"/","path":""}</script><script src="//unpkg.com/mermaid@8.13.5/dist/mermaid.min.js"></script><script>mermaid.initialize({
+ startOnLoad: true
+ , theme: 'dark'
+});</script><link rel="stylesheet" href="/css/arknights.css"><link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.4.0/styles/atom-one-dark-reasonable.min.css"><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 6.3.0"></head><body style="background-image:url(https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg);"><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><ol class="navContent"><li class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></li><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/demo/"><span class="navItemTitle">独立页面</span></a></li></ol></nav><div class="search-popup"><div id="search-result"></div></div></header><article><div id="post-title"><h1>汇编语言note.1</h1></div><hr><div id="post-content"><h1 id="汇编语言note-1"><a href="#汇编语言note-1" class="headerlink" title="汇编语言note.1"></a>汇编语言note.1</h1><h4 id="一：基础知识"><a href="#一：基础知识" class="headerlink" title="一：基础知识"></a>一：基础知识</h4><ol>
+<li><p>计算机系统由硬件系统（物质实体总和）和软件系统（可运行程序总和）组成；</p>
+</li>
+<li><p>计算机的硬件部分由5大部分组成：<u>输入设备，存储器，运算器，控制器，输出设备</u>组成；</p>
+</li>
+<li><p>5大部分之间通过<u>地址总线(Address Bus)，数据总线(Date Bus)，控制总线(Control Bus)</u>连接；</p>
+</li>
+<li><p>存储器：用于存储指令和数据，分为主存储器和辅助存储器：</p>
+</li>
+</ol>
+<p>主存储器：即主存或内存，包括随机读写存储器RAM和只读存储器ROM；</p>
+<p>辅助存储器：即外存，有磁表面存储器，光存储器和闪速存储器。</p>
+<ol>
+<li><p>数的表示形式：位、字节、字、双字、K、M、G、T、P、E、Z、Y、B、N、D；</p>
+</li>
+<li><p>位，即比特（bit），通常用<strong>b</strong>表示，是计算机中最小的信息单位，是用0或1来表示的一个二进制数位；</p>
+</li>
+<li><p>字节（Byte），8位二进制数表示一个字节，通常用<strong>B</strong>表示，是最基本的数据单位；</p>
+</li>
+<li><p>计算机中各种信息都普遍采用二进制数的形式来传送，存储和加工；</p>
+</li>
+<li><p>数制：十进制数（D） 、二进制数（B） 、八进制数（Q） 和十六进制数（H） ；</p>
+</li>
+<li><p>在程序设计中，为了区分不同进制的数，通常在数字后用一个英文字母作后缀以示区别；</p>
+</li>
+<li><p>逻辑运算：逻辑乘，逻辑加（或），逻辑非，逻辑异或；</p>
+</li>
+</ol>
+<p>（1）与运算（逻辑乘）：条件同真时，结果才为真；当条件中任意一个为假，结果必定为假；通常用X，^，∩或AND等来表示“与”；</p>
+<p>（2）或运算（逻辑加）：条件中任意一个为真时，结果就为真；当两个条件都为假时，结果才为假；通常用+，∨，∪或OR等表示“或”；</p>
+<p>（3）非运算：否运算，求反运算；通常在逻辑变量上加一横线，也可以用“<strong>¬</strong>”表示；</p>
+<p>（4）异或逻辑：对两个数进行异或操作就是按位求它们的模2和，故异或逻辑又有“按位加”之称；通常用“⊕”表示；两个条件值相同时，结果为0；两个条件值不同时，结果为1；</p>
+<ol>
+<li><p>无符号数:整个机器字长的全部二进制位均表示数值位，即没有符号位，相当于数的绝对值；机器字长为n位的无符号数表示的范围是0~（2^n-1）;</p>
+</li>
+<li><p>带符号数：通常约定二进制数的最高位为符号位，“<strong>0</strong>”表示正号，“<strong>1</strong>”表示负号；</p>
+</li>
+<li><p>机器数：在机器中，把一个数连同其符号在内数值化表示的数称作机器数；一般用最高有效位表示数的符号；</p>
+</li>
+<li><p>原码：原码就是符号位加上真值的绝对值，即用第一位表示符号，其余位表示值；</p>
+</li>
+<li><p>反码：正数的反码是其本身，负数的反码是在其<u>原码的基础上</u>，<strong>符号位</strong>不变，其余各个位取反；</p>
+</li>
+<li><p>补码：正数的补码就是其本身，负数的补码是在其原码的基础上，符号位不变，其余各位取反，最后+1(也即在反码的基础上+1)；</p>
+</li>
+<li><p>一条机器指令必须由两部分组成：操作码和地址码；</p>
+</li>
+</ol>
+<div id="paginator"></div></div><div id="post-footer"></div><div id="Valine"></div><div id="bottom-btn"><a id="to-index" href="#toc-div" title="index">≡</a><a id="to-top" onClick="scrolls.scrolltop();" title="to top" style="opacity: 0; display: none;">∧</a></div></article><aside><div id="aside-top"><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/3226021048XTC">Dr.落叶潇潇</a></h1><div id="description"><p>感</p><p>染</p><p>者</p><p>应</p><p>该</p><p>为</p><p>自</p><p>己</p><p>的</p><p>身</p><p>份</p><p>而</p><p>骄</p><p>傲</p><p>，</p><p>并</p><p>用</p><p>最</p><p>简</p><p>单</p><p>的</p><p>手</p><p>段</p><p>夺</p><p>取</p><p>大</p><p>地</p><p>的</p><p>公</p><p>正</p></div></div><div id="aside-block"><div id="toc-div"><h1>INDEX</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80note-1"><span class="toc-number">1.</span> <span class="toc-text">汇编语言note.1</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">一：基础知识</span></a></li></ol></li></ol></li></ol></li></ol></div></div></div><footer><nobr><span class="text-title">ICP</span><a class="text-content" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">罗德岛：R111</a></nobr><nobr>published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknight</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><div id="cursor-container"><div id="cursor-outer"></div><div id="cursor-effect"></div></div><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{new Valine({
+ el: '#Valine'
+ , appId: 'LSe7mf1XYliLqgIrc3jlqXfT-gzGzoHsz'
+ , appKey: 'Fu9giJfnidkCamaW89FUpidw' , placeholder: '此条评论委托企鹅物流发送'
+});code.findCode();mermaid.init(undefined, ('.mermaid'));}</script><script src="//unpkg.com/@highlightjs/cdn-assets@11.4.0/highlight.min.js"></script><script src="/js/arknights.js"></script><script>window.addEventListener("load",()=>{reset()})</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/z16.model.json"},"display":{"position":"left","width":300,"height":600,"hOffset":-15,"vOffset":-15},"mobile":{"show":false},"react":{"opacity":0.7},"log":false});</script></body></html>

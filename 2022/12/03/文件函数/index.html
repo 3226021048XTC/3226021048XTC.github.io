@@ -23,9 +23,9 @@
 <p>对于feof()来说，并不是通过读到EOF来判断文件是否为空，而是读取文件中输入光标后面是否有内容来判断文件是否为空，而一个文件即使没有输入数据，文件中也有EOF作为内容表示文件资料结束，因此feof()使用时站在光标后面观察是否有数据时看见了EOF自然就判断文件不为空；</p>
 <p>getc(FILE *name)，通过这个函数从文件中读取一个内容字符，让光标后移一个字符，让光标移动到EOF后面，这个时候在判断文件是否为空；</p>
 <p>注意使用这个函数后要在使用 <strong>rewind(FILE*name)</strong> 函数使光标回到文件开头部位，这样才能保住文件的正常使用；</p>
-<h3 id="三-格式化读写函数"><a href="#三-格式化读写函数" class="headerlink" title="三.格式化读写函数"></a>三.格式化读写函数</h3><p>格式化读取函数：<strong>fprintf()</strong> </p>
+<h3 id="三-格式化读写函数"><a href="#三-格式化读写函数" class="headerlink" title="三.格式化读写函数"></a>三.格式化读写函数</h3><p>格式化写入函数：<strong>fprintf()</strong> </p>
 <p>使用：<strong>fprintf(FILE <em>fp,char </em>format,····)</strong>，format表示格式控制输入字符串，····表示参数列表；</p>
-<p>格式化写入函数：<strong>fscanf()</strong> </p>
+<p>格式化读取函数：<strong>fscanf()</strong> </p>
 <p>使用：<strong>fscanf(FILE <em>fp,,char </em>format,····)</strong>,意义同上；</p>
 <p>fprintf()使用成功时返回成功写入的字符个数，失败返回负数；</p>
 <p>fscanf()使用时返回参数列表中被成功赋值的参数个数；</p>
