@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>汇编语言note.2 | Hexo</title><script src="//unpkg.com/valine/dist/Valine.min.js"></script><script>var config = {"root":"/","path":""}</script><script src="//unpkg.com/mermaid@8.13.5/dist/mermaid.min.js"></script><script>mermaid.initialize({
+ startOnLoad: true
+ , theme: 'dark'
+});</script><link rel="stylesheet" href="/css/arknights.css"><link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.4.0/styles/atom-one-dark-reasonable.min.css"><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 6.3.0"></head><body style="background-image:url(https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg);"><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><ol class="navContent"><li class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></li><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/demo/"><span class="navItemTitle">独立页面</span></a></li></ol></nav><div class="search-popup"><div id="search-result"></div></div></header><article><div id="post-title"><h1>汇编语言note.2</h1></div><hr><div id="post-content"><h2 id="1-微处理器"><a href="#1-微处理器" class="headerlink" title="1.微处理器"></a>1.微处理器</h2><p>8086微处理器由执行指令单元EU和总线接口单元BIU组成：</p>
+<p>EU部分负责指令的执行，由ALU，标志寄存器，通用寄存器，数据寄存器和EU控制单元组成；EU主要实现两种操作，一种是根据指令进行算术/逻辑运算；二是由EU计算出指令要求的寻址单元的偏移地址量；</p>
+<p>BIU负责与存储器接口，即808CPU与存储器之间的信息传送，8086由地址加法器，段寄存器，指令指针IP，指令队列和总线控制逻辑组成；BIU完成从内存的指令单元去除指令，送至指令流队列中排队，执行指令时所需的操作数也有BIU从指定区域取出，送至EU中区执行；</p>
+<p>EU和BIU的操作是独立进行的；</p>
+<p><img src="C:\Blog\blog\source\_posts\汇编语言note-2\图片1.png" alt=""></p>
+<p>地址加法器：将指令指针IP和段寄存器CS或者EU送来的地址偏移量与段寄存器DS形成的一个20为的物理地址；（就物理地址的形成方法：物理地址=段地址*16+偏移地址）</p>
+<h2 id="2-寄存器"><a href="#2-寄存器" class="headerlink" title="2.寄存器"></a>2.寄存器</h2><p>80x86共14个16位寄存器，分别为<strong>数据寄存器，指针及变址寄存器，段寄存器和控制寄存器</strong>；所有寄存器都是16位的，可以存放两个字节；</p>
+<p><strong>数据寄存器</strong>：AX,BX,CX,DX；用来暂时存放运算过程中的初中生，结果数据或其他数据；</p>
+<p>为了保证兼容性，这4个寄存器又可以分为两个可以<strong>独立使用</strong>的8位寄存器，</p>
+<p>·AX分为AH和AL</p>
+<p>$·$BX分为BH和BL</p>
+<p>·CX分为CH和CL</p>
+<p>·DX分为DH和DL</p>
+<p>AH,BH,CH,DH为高8位寄存器，AL,BL,CL,DL位低8位寄存器；除了上面 4 个数据寄存器以外，其他寄存器均不可以分为两个独立的 8 位寄存器 ；</p>
+<p>这四个都是通用寄存器，但又可以用于专用目的；</p>
+<ol>
+<li>AX：累加器，其特殊用途是在使用 DIV （除法指令）和 MUL （乘法指令）时使用：</li>
+</ol>
+<p>DIV 在 8086 CPU 中是除法指令，而在使用除法的时候有两种情况，即除数可以是 8 位或者是 16 位的，而且除数可以存放在寄存器中或者是内存单元中，而至于被除数的话，自然，应该由 AX 来代替了；</p>
+<p>当除数是 8 位时，被除数一定会是 16 位的，并且默认是放在 AX 寄存器中，</p>
+<p>而当除数是 16 位时，被除数一定是 32 位的，因为 AX 是 16 位寄存器，自然，放不下 32 位的被除数，</p>
+<p>所以，在这里还需要使用另一个 16 位寄存器 DX ，其中 DX 存放 32 位的被除数的高 16 位，而 AX 则存放 32 位的被除数的低 16 位；</p>
+<p>同时，AX 的作用还不仅仅是用来保存被除数的，当除法指令执行完成以后，如果除数是 8 位的，则在 AL 中会保存此次除法操作的商，而在 AH 中则会保存此次除法操作的余数，当然，如果除数是 16 位的话，则 AX 中会保存本次除法操作的商，而 DX 则保存本次除法操作的余数。（<u>低位保存商，高位保存余数</u>）</p>
+<p>当使用     MUL 做乘法运算时，两个相乘的数要么都是 8 位，要么都是 16 位，</p>
+<p>如果两个相乘的数都是 8 位的话，则一个默认是放在 AL 中，而另一个 8 位的乘数则位于其他的寄存器或者说是内存字节单元中，</p>
+<p>而如果两个相乘的数都是 16 位的话，则一个默认存放在 AX 中，另一个 16 位的则是位于 16 位的寄存器中或者是某个内存字单元中；</p>
+<p>同时，当 MUL 指令执行完毕后，如果是 8 位的乘法运算，则默认乘法运算的结果是保存在 AX 中，而如果是 16 位的乘法运算的话，则默认乘法运算的结果有 32 位，其中，高位默认保存在 DX 中，而低位则默认保存在 AX 中。</p>
+<ol>
+<li>BX：其中数据一般可以用来作为偏移地址使用；</li>
+<li>CX：有计数器的功能;</li>
+</ol>
+<p>当在汇编指令中使用循环 LOOP 指令时，可以通过 CX 来指定需要循环的次数，而 CPU 在每一次执行 LOOP 指令的时候，都会做两件事：一件就是令 CX = CX – 1，即令 CX 计数器自动减去 ，还有一件就是判断 CX 中的值，如果 CX 中的值为 0 则会跳出循环，而继续执行循环下面的指令，当然如果 CX 中的值不为 0 ，则会继续执行循环中所指定的指令 。</p>
+<ol>
+<li>DX:部分用法同AX；在间接寻址的I/O指令中提供端口地址；</li>
+</ol>
+<p><strong>指针及变址寄存器</strong>：包括SP,BP,SI,DI；可以与数据寄存器一样在运算过程中存放操作数，但只能以16位使用，另外其常用于在段内寻址时提供偏移地址；</p>
+<ol>
+<li><p>SP：堆栈(即栈)指针寄存器；SP用来指出当前堆栈的栈顶的位置，在堆栈指令操作时，由它给出入栈或出栈的数据在栈中的偏移地址，与SS堆栈段寄存器一起形成栈顶存储单元的物理地址；</p>
+</li>
+<li><p>BP：基址指针寄存器；用来指示堆栈中某个数据区的偏移地址，与SS堆栈段寄存器一起形成堆栈中<strong>某个</strong>存储单元的物理地址；可以对堆栈中任意位置的数据进行操作，但不具备SP始终指向栈顶的含义；</p>
+<p>当以 […] 的方式访问内存单元而且在 […] 中使用了寄存器 BP 的话，那么如果在指令中没有明确或者说是显示的给出段地址时，段地址则使用默认的 SS 寄存器中的值（BX，SI，DI 会默认使用 DS 段寄存器），比如 DS:[BP] 则在这里明确给出了段地址位于 DS 中，</p>
+<p>所以，这里代表的内存单元即是段地址为 DS ，偏移量为 BP 寄存器中的值的内存单元，</p>
+<p>而如果单单是使用 [BP] 的话，则代表的内存单元是段地址为 SS，偏移量为 BP 寄存器中的值的内存单元。</p>
+</li>
+<li><p>SI(源变址寄存器)与DI(目的变址寄存器)：这两个寄存器与DS数据段寄存器一起用来确定<strong>数据段</strong>中某一存储单元的物理地址；拥有自动增量和自动减量的功能；</p>
+</li>
+</ol>
+<p><strong>段寄存器</strong>：CS,SS,DS,ES，四个16位的段寄存器；</p>
+<ol>
+<li>CS：代码段寄存器，和IP一起用，组成一组寄存器：CS:IP；</li>
+</ol>
+<p>CS指示基地址（也就是段地址左移 4 位），IP指示偏移地址；</p>
+<p>这组寄存器指示了当前CPU要读取的指令的地址；任何时候，CS:IP 指向的地址中的内容都是 CPU 当前执行的指令；</p>
+<ol>
+<li>SS：堆栈段寄存器，和SP一起用；在任何时刻，SS:SP 都是指向栈顶元素 。</li>
+</ol>
+<p>SS指示基地址（也就是段地址左移 4 位），SP指示偏移地址；</p>
+<ol>
+<li><p>DS：数据段寄存器；DS 中存放的是数据段的段地址；</p>
+</li>
+<li><p>ES：附加段寄存器；相当于其他段寄存器的扩展，当其他段寄存器不够用时，可以考虑使用ES寄存器；</p>
+</li>
+</ol>
+<p><strong>控制寄存器</strong>：IP,PSW；</p>
+<ol>
+<li><p>IP：指针指令寄存器，用来存放代码段宏的偏移地址，和CS一起联用；</p>
+</li>
+<li><p>PSW：程序状态字寄存器，或者称为标志寄存器（FLAGS）；</p>
+</li>
+</ol>
+<p>在 PSW 中，数据是按位起作用的，也就是说，PSW 中的每一个位都表示不同的状态，由于一个位也就能表示 0 和 1 ，自然，PSW中的每一个位就是用来描述状态的，</p>
+<p>不同的位分别表示不同状态和意义：</p>
+<p>CF（第0位）：进位标志，是用来反映计算时是否产生了由低位向高位的进位，或者产生了从高位到低位的借位 ，注意进位与溢出时含义不同的标志，有进位时CF=1，否则置零；</p>
+<p>PF（第2位）：奇偶标志，用来为机器中传送信息时肯产生的代码错误情况提供检验条件，当结果操作数中1的个数为偶数时PF置1，否则置0；常用于逻辑运算中；</p>
+<p>AF（第4位）：辅助进位标志，记录运算时第3位（从0开始算位）产生的进位值或借位值，有进位或借位时AF位置1，否则置0；</p>
+<p>ZF（第6位）：零标志，运算执行结果位0时ZF位置1，否则置0；常用于分支程序或者循环程序的转移控制；</p>
+<p>SF（第7位）：符号标志，记录运算结果的符号，为负时SF位置1，否则置0；常用于表示有符号数运算结果的正负；</p>
+<p>TF（第8位）：陷阱标志，或单步跟踪标志，用于调试时的单步方式操作；当 TF 置 0 时，处理器在正常模式下运行；当 TF置 1 时，处理器单步执行指令，调试器可以逐条指令进行执行就是使用了该标志位。</p>
+<p>IF（第9位）：中断标志，当IF位为1时，CPU 能够响应外部的可屏蔽中断请求;否则关闭请求，本标志对外部中断进行管理；</p>
+<p>DF（第10位）：方向标志，其用于在串处理指令中，用来控制处理信息的方向，当DF位为1时，每次操作后使变址寄存器SI和DI减少，这样就能使串处理从高地址向低地址方向处理，当DF位为0时，每次操作后使SI和DI增大，串处理就能从低地址向高地址方向处理；</p>
+<p>OF（第11位）：溢出标志，其通常记录了有符号数运算的结果是否发生了溢出 ，如操作数是否超出机器能表示的数据范围；溢出时OF为1，否则为0，溢出时表面运算结果错误，一般通过溢出中断处理加以解决；</p>
+<div id="paginator"></div></div><div id="post-footer"></div><div id="Valine"></div><div id="bottom-btn"><a id="to-index" href="#toc-div" title="index">≡</a><a id="to-top" onClick="scrolls.scrolltop();" title="to top" style="opacity: 0; display: none;">∧</a></div></article><aside><div id="aside-top"><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/3226021048XTC">Dr.落叶潇潇</a></h1><div id="description"><p>感</p><p>染</p><p>者</p><p>应</p><p>该</p><p>为</p><p>自</p><p>己</p><p>的</p><p>身</p><p>份</p><p>而</p><p>骄</p><p>傲</p><p>，</p><p>并</p><p>用</p><p>最</p><p>简</p><p>单</p><p>的</p><p>手</p><p>段</p><p>夺</p><p>取</p><p>大</p><p>地</p><p>的</p><p>公</p><p>正</p></div></div><div id="aside-block"><div id="toc-div"><h1>INDEX</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8"><span class="toc-number">1.</span> <span class="toc-text">1.微处理器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">2.寄存器</span></a></li></ol></div></div></div><footer><nobr><span class="text-title">ICP</span><a class="text-content" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">罗德岛：R111</a></nobr><nobr>published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknight</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><div id="cursor-container"><div id="cursor-outer"></div><div id="cursor-effect"></div></div><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{new Valine({
+ el: '#Valine'
+ , appId: 'LSe7mf1XYliLqgIrc3jlqXfT-gzGzoHsz'
+ , appKey: 'Fu9giJfnidkCamaW89FUpidw' , placeholder: '此条评论委托企鹅物流发送'
+});code.findCode();mermaid.init(undefined, ('.mermaid'));}</script><script src="//unpkg.com/@highlightjs/cdn-assets@11.4.0/highlight.min.js"></script><script src="/js/arknights.js"></script><script>window.addEventListener("load",()=>{reset()})</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/z16.model.json"},"display":{"position":"left","width":300,"height":600,"hOffset":-15,"vOffset":-15},"mobile":{"show":false},"react":{"opacity":0.7},"log":false});</script></body></html>
