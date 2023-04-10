@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>汇编语言note.3 | Hexo</title><script src="//unpkg.com/valine/dist/Valine.min.js"></script><script>var config = {"root":"/","path":""}</script><script src="//unpkg.com/mermaid@8.13.5/dist/mermaid.min.js"></script><script>mermaid.initialize({
+ startOnLoad: true
+ , theme: 'dark'
+});</script><link rel="stylesheet" href="/css/arknights.css"><link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.4.0/styles/atom-one-dark-reasonable.min.css"><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 6.3.0"></head><body style="background-image:url(https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg);"><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><ol class="navContent"><li class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></li><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/demo/"><span class="navItemTitle">独立页面</span></a></li></ol></nav><div class="search-popup"><div id="search-result"></div></div></header><article><div id="post-title"><h1>汇编语言note.3</h1></div><hr><div id="post-content"><h1 id="80x86指令系统"><a href="#80x86指令系统" class="headerlink" title="80x86指令系统"></a>80x86指令系统</h1><h4 id="1-加法指令："><a href="#1-加法指令：" class="headerlink" title="1.加法指令："></a>1.加法指令：</h4><ol>
+<li>add：不带进位加法指令</li>
+</ol>
+<p>格式：add opd，ops </p>
+<p>完成两个操作数的相加，并将其放在opd中，其中opd可以是寄存器和内存单元，ops为寄存器，内存单元或立即数；</p>
+<p>对标志位CF和OF有影响，CF=1表示最高有效位向更高位有进位，为0则表示无进位；OF=1表示两个同符号数相加结果符号与其相反，即相加结果溢出，为0表示两个不同符号数相加，或同符号数相加，结果符号与其相同；</p>
+<p>剩下的标识符被结果所影响，</p>
+<p>对SF的影响：反映有符号数运算结果的正负性，正数为0，负数为1；</p>
+<p>对ZF的影响：判断结果是否为0，结果为0，ZF=1，否则ZF=0；</p>
+<p>对PF的影响：结果的二进制表示中1的个数是否为偶数，若1的个数为偶数，PF=1；若1的个数为奇数，PF=0；</p>
+<p>对AF的影响：在进行算术运算的时候，如果低字节中低4位产生进位或者借位的时候，则置1，否则置0。即当两个字节相加时，如果从第3位向第4位形成了进位，则AF=1</p>
+<ol>
+<li>adc：带进位加法指令</li>
+</ol>
+<p>格式：adc opd，ops</p>
+<p>在add的基础上，相加时加上CF，即opd&lt;-opd+ops+cf，其中opd与ops要求与add相同；</p>
+<p>对标志位的影响和add相同；</p>
+<ol>
+<li>inc指令：</li>
+</ol>
+<p>格式：inc opd</p>
+<p>opd的内容加1，其中opd可以是寄存器或内存单元，若是内存单元，应指定是字节或字单元；</p>
+<p>对标志位的影响除了不影响CF以外，和上面相同；</p>
+<h4 id="2-减法指令"><a href="#2-减法指令" class="headerlink" title="2.减法指令"></a>2.减法指令</h4><ol>
+<li>sub：不带借位减法</li>
+</ol>
+<p>格式：sub opd，ops</p>
+<p>完成两个操作数的相减，将其结果存放于opd，其中opd可以是寄存器和内存单元，ops为寄存器，内存单元或立即数；</p>
+<p>对CF的影响：CF=1表示减法运算中最高有效位向更高位有借位，即被减数小于减数，不够减的情况，CF=0则表示无借位；</p>
+<p>对OF的影响：OF=1 两数符号相反（正数-负数（相当与加上正数）=负数，或负数-正数=正数），而结果符号与减数相同，即溢出；OF=0 同符号数相减时，或不同符号数相减，其结果符号与减数不同。</p>
+<p>对ZF,PF,SF,AF的影响和加法指令相同，都是结果影响标识符，影响条件一样，其中的AF为半借位；</p>
+<ol>
+<li>sbb：带借位减法：</li>
+</ol>
+<p>格式：sbb opd，ops</p>
+<p>在sub的基础上再减去CF，结果存于opd，其中opd与ops要求与add相同；</p>
+<p>对标识符的影响如上；</p>
+<ol>
+<li>dec指令：</li>
+</ol>
+<p>格式：dec opd</p>
+<p>相当于opd减去1，其中opd的含义与inc指令相同</p>
+<ol>
+<li>neg：求补指令</li>
+</ol>
+<p>格式：neg opd</p>
+<p>对操作数opd进行求补运算，即对opd连同其符号位求反后加1，并将结果送回opd；</p>
+<p><strong>在计算机中，数据都是以补码的形式存储的</strong>，所以对操作数进行求补时，对于负数相当于求绝对值，对于正数相当于求正数相反数的补码表示；</p>
+<p>其中的opd可以是寄存器或者内存单元；</p>
+<p>对标识符的影响与用0减去opd的sub指令相同；</p>
+<p>其中对0求补时，CF=1，其他情况CF=1；</p>
+<ol>
+<li>cmp：比较指令</li>
+</ol>
+<p>格式：cmp opd，ops</p>
+<p>执行从目的操作数中减去源操作数的隐含减法操作，并且不修改任何操作数，该指令用于改变标志位(<u>当实际的减法发生时，CMP指令按照计算结果修改溢出、符号、零、进位、辅助进位和奇偶标志位</u>);</p>
+<p>无符号数比较：</p>
+<p>目的操作数&lt;源操作数 CF=1</p>
+<p>目的操作数&gt;源操作数 CF=0</p>
+<p>目的操作数=源操作数 ZF=1</p>
+<p>有符号数比较：</p>
+<p>目的操作数&lt;源操作数 SF≠OF</p>
+<p>目的操作数&gt;源操作数 SF=OF</p>
+<p>目的操作数=源操作数 ZF=1</p>
+<h4 id="3-乘法指令"><a href="#3-乘法指令" class="headerlink" title="3.乘法指令"></a>3.乘法指令</h4><ol>
+<li>mul：无符号乘法数指令</li>
+</ol>
+<p>格式：mul opd</p>
+<p>操作数可以是寄存器和内存单元，但不能是立即数；当操作数为内存单元时应指明是字节还是字数据；</p>
+<p><strong>word ptr指明了指令访问的内存单元是一个字单元</strong>；</p>
+<p><strong>byte ptr指明了指令访问的内存单元是一个字节单元</strong>；</p>
+<p>实现两个无符号数的相乘，当opd为8为字节数据时为字节相乘，将AL与opd相乘，其中AL为隐含操作数（必须是AL），结果存于AX寄存器，AH存放高位字节，AL存放低位字节；当opd为16位字数据时为字相乘，将AX与opd相乘（必须是AX），将结果高位存于DX，低位存于AX；</p>
+<p>MUL指令对标志位CF、OF有影响，对SF、ZF、AF、PF 无定义;</p>
+<p>注：对标志位的“无定义”和“不影响”不同。无定义是指指令执行后，标志位的状态不确定；不影响是指指令的结果不影响标志位。即标志位保持原状态不变。</p>
+<p>如果运算结果的高一半（AH,DX）为零，则CF=OF=0，否则CF=OF=1；</p>
+<ol>
+<li>imul：有符号乘法数指令</li>
+</ol>
+<p>格式：imul opd</p>
+<p>与mul相同，只是专用与有符号数的相乘，即要求两个操作数都须为有符号数；</p>
+<p>若乘积的高半部分是低半部分的符号位扩展，则OF=CF=0;否则OF=CF=1；</p>
+<p>注：</p>
+<h6 id="符号扩展"><a href="#符号扩展" class="headerlink" title="符号扩展"></a>符号扩展</h6><p>微机系统中，有时需要将一个数据从位数较少扩展到位数较多，例如，在执行除法指令时，由于对字节除数相除要求被除数为16位，对字除数要求被除数为32位，即被除数必须为除数的倍长数据，因此就涉及数据的位数扩展问题，具体的扩展有符号扩展与零扩展两种方法。</p>
+<p>当要扩展的数据是无符号数时可采用零扩展。即在最高位前扩展0，补充够位数即可。<br>当要扩展的数据是有符号数时需采用符号扩展。由于采用<strong>补码</strong>形式表示的整数具有固定的长度，因此在汇编指令系统中，经常有一些指令需要将其中的操作数进行符号位扩展。譬如两个8位或16位数据进行相加或者相减运算时，当有不足位数要求的数据时，需要将少位数据扩展成与位数要求相一致的数据；两个数据相除时，被除数应必须是除数的倍数等。<br>符号扩展的方法是将需要扩展的数据的符号位填入到扩展的每一位，以保持其作为有符号数的值的大小不变。这里要注意，<strong>要扩展的数须是用补码形式表示的有符号数</strong>，符号扩展后。其结果仍是该数的补码。<br>因此，对于补码表示的数，其正数的符号扩展是将其符号位0向左扩展（补0）；其负数的符号扩展是将其符号位1向左扩展（补1）。</p>
+<h6 id="符号扩展语句"><a href="#符号扩展语句" class="headerlink" title="符号扩展语句"></a>符号扩展语句</h6><p>字节扩展为字指令CBW<br>指令格式：CBW<br>功能：该指令的隐含操作数为AH和AL，功能是用AL的符号位去填充AH，即若AL为正数，则AH=00H；否则AH=FFH。<br>字扩展为双字指令CWD<br>指令格式：CWD<br>功能：该指令的隐含操作数为DX和AX，功能是用AX的符号位填充DX，即若AX为正数，则DX=0000H；否则DX=FFFFH。<br>以上两条指令的执行都不影响任何标志位。</p>
+<p>有符号相乘的步骤：</p>
+<ol>
+<li>符号位扩展（负数前面补1，正数补0）</li>
+<li>扩展后的数据两式相乘</li>
+<li>求补（计算机中存放的是补码）</li>
+<li>取有效位，比如3位数据相乘，得到的结果取有效位6位即可。</li>
+</ol>
+<h4 id="4-除法指令"><a href="#4-除法指令" class="headerlink" title="4.除法指令"></a>4.除法指令</h4><ol>
+<li>div：无符号除法</li>
+</ol>
+<p>格式：div opd</p>
+<p>操作数可以是寄存器或内存单元，不能是立即数；</p>
+<p>实现两个无符号数的除法运算，当opd为8位字节数据时为字节相除，被除数在AX中，除数在opd中，al存放商，ah存放余数，其中AX是隐含操作数；当opd为16位字数据时为字相除，被除数在DX和AX中，DX存放高字节，AX存放低字节，AX存放商，DX存放余数，AX，DX是隐含操作数；</p>
+<p>除法指令对所有标志位均无定义，但会产生<strong>除法溢出</strong>。</p>
+<p>如果被除数高位的数值等于或大于除数，那么会产生溢出，也就是说除法的商放不下容纳它的位置，就会产生除法溢出，这将导致处理器异常并暂停执行当前程序，</p>
+<ol>
+<li>idiv：有符号数除法指令</li>
+</ol>
+<p>格式与功能和div类似，只是专用于有符号数的相除；</p>
+<div id="paginator"></div></div><div id="post-footer"></div><div id="Valine"></div><div id="bottom-btn"><a id="to-index" href="#toc-div" title="index">≡</a><a id="to-top" onClick="scrolls.scrolltop();" title="to top" style="opacity: 0; display: none;">∧</a></div></article><aside><div id="aside-top"><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/3226021048XTC">Dr.落叶潇潇</a></h1><div id="description"><p>感</p><p>染</p><p>者</p><p>应</p><p>该</p><p>为</p><p>自</p><p>己</p><p>的</p><p>身</p><p>份</p><p>而</p><p>骄</p><p>傲</p><p>，</p><p>并</p><p>用</p><p>最</p><p>简</p><p>单</p><p>的</p><p>手</p><p>段</p><p>夺</p><p>取</p><p>大</p><p>地</p><p>的</p><p>公</p><p>正</p></div></div><div id="aside-block"><div id="toc-div"><h1>INDEX</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#80x86%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.</span> <span class="toc-text">80x86指令系统</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8A%A0%E6%B3%95%E6%8C%87%E4%BB%A4%EF%BC%9A"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">1.加法指令：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%87%8F%E6%B3%95%E6%8C%87%E4%BB%A4"><span class="toc-number">1.0.0.2.</span> <span class="toc-text">2.减法指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E4%B9%98%E6%B3%95%E6%8C%87%E4%BB%A4"><span class="toc-number">1.0.0.3.</span> <span class="toc-text">3.乘法指令</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E6%89%A9%E5%B1%95"><span class="toc-number">1.0.0.3.0.1.</span> <span class="toc-text">符号扩展</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E6%89%A9%E5%B1%95%E8%AF%AD%E5%8F%A5"><span class="toc-number">1.0.0.3.0.2.</span> <span class="toc-text">符号扩展语句</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E9%99%A4%E6%B3%95%E6%8C%87%E4%BB%A4"><span class="toc-number">1.0.0.4.</span> <span class="toc-text">4.除法指令</span></a></li></ol></li></ol></li></ol></li></ol></div></div></div><footer><nobr><span class="text-title">ICP</span><a class="text-content" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">罗德岛：R111</a></nobr><nobr>published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknight</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><div id="cursor-container"><div id="cursor-outer"></div><div id="cursor-effect"></div></div><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{new Valine({
+ el: '#Valine'
+ , appId: 'LSe7mf1XYliLqgIrc3jlqXfT-gzGzoHsz'
+ , appKey: 'Fu9giJfnidkCamaW89FUpidw' , placeholder: '此条评论委托企鹅物流发送'
+});code.findCode();mermaid.init(undefined, ('.mermaid'));}</script><script src="//unpkg.com/@highlightjs/cdn-assets@11.4.0/highlight.min.js"></script><script src="/js/arknights.js"></script><script>window.addEventListener("load",()=>{reset()})</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/z16.model.json"},"display":{"position":"left","width":300,"height":600,"hOffset":-15,"vOffset":-15},"mobile":{"show":false},"react":{"opacity":0.7},"log":false});</script></body></html>
