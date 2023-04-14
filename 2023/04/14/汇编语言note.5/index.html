@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>汇编语言note.5 | Hexo</title><script src="//unpkg.com/valine/dist/Valine.min.js"></script><script>var config = {"root":"/","path":""}</script><script src="//unpkg.com/mermaid@8.13.5/dist/mermaid.min.js"></script><script>mermaid.initialize({
+ startOnLoad: true
+ , theme: 'dark'
+});</script><link rel="stylesheet" href="/css/arknights.css"><link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.4.0/styles/atom-one-dark-reasonable.min.css"><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 6.3.0"></head><body style="background-image:url(https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg);"><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><ol class="navContent"><li class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></li><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/demo/"><span class="navItemTitle">独立页面</span></a></li></ol></nav><div class="search-popup"><div id="search-result"></div></div></header><article><div id="post-title"><h1>汇编语言note.5</h1></div><hr><div id="post-content"><h2 id="逻辑运算指令"><a href="#逻辑运算指令" class="headerlink" title="逻辑运算指令"></a>逻辑运算指令</h2><p>逻辑运算指令用于实现逻辑运算功能，有单操作数和双操作数之分，操作数可以为8位或者16位二进制数，但双操作数不允许两个操作数都是存储器操作数，目的操作数不能是立即数，两个操作数的位数要一致；</p>
+<h4 id="AND：逻辑与运算指令"><a href="#AND：逻辑与运算指令" class="headerlink" title="AND：逻辑与运算指令"></a>AND：逻辑与运算指令</h4><p>与：当两者都为1时结果取1，否则都取0；</p>
+<p>格式：AND OPD,OPS</p>
+<p>对两个操作数执行按位的逻辑与运算，结果送到目的操作数；</p>
+<p>功能：可屏蔽某些位(将这些位置0) 注：和0与清零，和1与保留原来的值；</p>
+<p>设置CF=OF=0；根据结果确定SF,ZF和PF，对AF则无定义；</p>
+<h4 id="OR：逻辑或运算指令"><a href="#OR：逻辑或运算指令" class="headerlink" title="OR：逻辑或运算指令"></a>OR：逻辑或运算指令</h4><p>或：当两者中均没有0时，取1；只有两者都为0时，取0；</p>
+<p>格式：OR OPD,OPS</p>
+<p>对两个操作数执行按位逻辑或运算，结果送到目的操作数；</p>
+<p>功能: 使某些位置为1；</p>
+<p>对标志位的影响同AND指令；</p>
+<h4 id="NOT：逻辑非指令"><a href="#NOT：逻辑非指令" class="headerlink" title="NOT：逻辑非指令"></a>NOT：逻辑非指令</h4><p>非：按位取反，原来是“0”的位变为“1”，原来是“1”的位变为“0”;</p>
+<p>格式：NOT OPD</p>
+<p>对标志位没有影响；</p>
+<h4 id="XOR：逻辑异或运算"><a href="#XOR：逻辑异或运算" class="headerlink" title="XOR：逻辑异或运算"></a>XOR：逻辑异或运算</h4><p>异或：两者相同时候，输出0；两者不同时，输出1；</p>
+<p>格式：XOR OPD,OPS</p>
+<p>对两个操作数执行按位逻辑异或运算，结果送到目的操作数；</p>
+<p>功能：使操作数的某些位取反或测试两数是否相等；</p>
+<p>对标识位的影响同AND指令一样；</p>
+<h4 id="TEST：测试指令"><a href="#TEST：测试指令" class="headerlink" title="TEST：测试指令"></a>TEST：测试指令</h4><p>格式：TEST OPD,OPS</p>
+<p>对两个操作数执行逻辑与运算，但结果不送回目的操作数，仅建立结果状态标志；</p>
+<p>可以用来检测一些条件是否满足，但不会改变原操作数的内容；</p>
+<p>对标识符的影响：SF：将结果的最高位赋给SF标志位，例如结果最高位是1，SF就是1；</p>
+<p>ZF：看TEMP是不是0，如果TEMP是0，ZF位置1；如果TEMP不是0，ZF位置0；</p>
+<p>PF：PF位是奇偶校验位，如果结果低8位中1的个数是偶数，PF=1；否则PF=0;</p>
+<p>CF=OF=0；</p>
+<h2 id="移位指令"><a href="#移位指令" class="headerlink" title="移位指令"></a>移位指令</h2><p>移位指令都有两个操作数，OPD是指定的被移位的操作数，可以是寄存器或者存储单元，OPS表示移位位数，该操作数为1时，表示移动1位，当移位位数大于1时，则OPS为CL寄存器值（即当数值大于1时，数要先传入CL寄存器）；</p>
+<p>有符号数使用算术移位，无符号数使用逻辑移位；</p>
+<h4 id="SAL-SHL-算术-逻辑左移"><a href="#SAL-SHL-算术-逻辑左移" class="headerlink" title="SAL/SHL:算术/逻辑左移"></a>SAL/SHL:算术/逻辑左移</h4><p>格式：  SAL/SHL OPD,OPS</p>
+<p>将操作数左移，最低位补0，最高位进CF；</p>
+<h4 id="SAR：算术右移"><a href="#SAR：算术右移" class="headerlink" title="SAR：算术右移"></a>SAR：算术右移</h4><p>格式：SAR OPD,OPS；</p>
+<p>操作数右移，最高位不变（即最高位原来是1/0，右移过后最高位就补1/0），最低位进CF；</p>
+<h4 id="SHR：逻辑右移"><a href="#SHR：逻辑右移" class="headerlink" title="SHR：逻辑右移"></a>SHR：逻辑右移</h4><p>格式：SHR OPD,OPS</p>
+<p>操作数右移，最高位补0，最低位进CF；</p>
+<p><em>逻辑左移一位相当于无符号数乘以2，右移一位相当于无符号数除以2</em></p>
+<p><em>算术左移一位相当于有符号数乘以2，右移一位相当于有符号数除以2</em></p>
+<p>移位指令对AF无定义，CF为移位后确定的值，并根据移位后的结果设置SF,ZF,PF；当移位后符号发生变化，则OF=1，否则OF=0；当移位次数大于1时，OF不确定；</p>
+<h2 id="循环移位指令"><a href="#循环移位指令" class="headerlink" title="循环移位指令"></a>循环移位指令</h2><p><strong>ROL</strong>：不带进位循环左移</p>
+<p>格式：ROL OPD,OPS；</p>
+<p>指令把所有位都向左移。最高位复制到标志位CF和最低位,位循环不会丢弃位。从数的一端循环出去的位会出现在该数的另一端;</p>
+<p><strong>ROR</strong>：不带进位循环右移</p>
+<p>格式：ROR OPD,OPS；</p>
+<p>指令把所有位都向右移，最低位复制到标志位CF和最高位;</p>
+<p><strong>RCL</strong>：带进位循环左移</p>
+<p>格式：RCL OPD,OPS；</p>
+<p>指令把每一位都向左移，标志位CF复制到最低有效位，而最高有效位复制到标志位CF：</p>
+<p><strong>RCR</strong>：带进位循环右移</p>
+<p>格式：RCR OPD,OPS；</p>
+<p>指令把每一位都向右移，标志位CF复制到最高有效位，而最低有效位复制到标志位CF;</p>
+<div id="paginator"></div></div><div id="post-footer"></div><div id="Valine"></div><div id="bottom-btn"><a id="to-index" href="#toc-div" title="index">≡</a><a id="to-top" onClick="scrolls.scrolltop();" title="to top" style="opacity: 0; display: none;">∧</a></div></article><aside><div id="aside-top"><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/3226021048XTC">Dr.落叶潇潇</a></h1><div id="description"><p>感</p><p>染</p><p>者</p><p>应</p><p>该</p><p>为</p><p>自</p><p>己</p><p>的</p><p>身</p><p>份</p><p>而</p><p>骄</p><p>傲</p><p>，</p><p>并</p><p>用</p><p>最</p><p>简</p><p>单</p><p>的</p><p>手</p><p>段</p><p>夺</p><p>取</p><p>大</p><p>地</p><p>的</p><p>公</p><p>正</p></div></div><div id="aside-block"><div id="toc-div"><h1>INDEX</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E6%8C%87%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">逻辑运算指令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AND%EF%BC%9A%E9%80%BB%E8%BE%91%E4%B8%8E%E8%BF%90%E7%AE%97%E6%8C%87%E4%BB%A4"><span class="toc-number">1.0.1.</span> <span class="toc-text">AND：逻辑与运算指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#OR%EF%BC%9A%E9%80%BB%E8%BE%91%E6%88%96%E8%BF%90%E7%AE%97%E6%8C%87%E4%BB%A4"><span class="toc-number">1.0.2.</span> <span class="toc-text">OR：逻辑或运算指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#NOT%EF%BC%9A%E9%80%BB%E8%BE%91%E9%9D%9E%E6%8C%87%E4%BB%A4"><span class="toc-number">1.0.3.</span> <span class="toc-text">NOT：逻辑非指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#XOR%EF%BC%9A%E9%80%BB%E8%BE%91%E5%BC%82%E6%88%96%E8%BF%90%E7%AE%97"><span class="toc-number">1.0.4.</span> <span class="toc-text">XOR：逻辑异或运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TEST%EF%BC%9A%E6%B5%8B%E8%AF%95%E6%8C%87%E4%BB%A4"><span class="toc-number">1.0.5.</span> <span class="toc-text">TEST：测试指令</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%BB%E4%BD%8D%E6%8C%87%E4%BB%A4"><span class="toc-number">2.</span> <span class="toc-text">移位指令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SAL-SHL-%E7%AE%97%E6%9C%AF-%E9%80%BB%E8%BE%91%E5%B7%A6%E7%A7%BB"><span class="toc-number">2.0.1.</span> <span class="toc-text">SAL&#x2F;SHL:算术&#x2F;逻辑左移</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SAR%EF%BC%9A%E7%AE%97%E6%9C%AF%E5%8F%B3%E7%A7%BB"><span class="toc-number">2.0.2.</span> <span class="toc-text">SAR：算术右移</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SHR%EF%BC%9A%E9%80%BB%E8%BE%91%E5%8F%B3%E7%A7%BB"><span class="toc-number">2.0.3.</span> <span class="toc-text">SHR：逻辑右移</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E7%A7%BB%E4%BD%8D%E6%8C%87%E4%BB%A4"><span class="toc-number">3.</span> <span class="toc-text">循环移位指令</span></a></li></ol></div></div></div><footer><nobr><span class="text-title">ICP</span><a class="text-content" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">罗德岛：R111</a></nobr><nobr>published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknight</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><div id="cursor-container"><div id="cursor-outer"></div><div id="cursor-effect"></div></div><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{new Valine({
+ el: '#Valine'
+ , appId: 'LSe7mf1XYliLqgIrc3jlqXfT-gzGzoHsz'
+ , appKey: 'Fu9giJfnidkCamaW89FUpidw' , placeholder: '此条评论委托企鹅物流发送'
+});code.findCode();mermaid.init(undefined, ('.mermaid'));}</script><script src="//unpkg.com/@highlightjs/cdn-assets@11.4.0/highlight.min.js"></script><script src="/js/arknights.js"></script><script>window.addEventListener("load",()=>{reset()})</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/z16.model.json"},"display":{"position":"left","width":300,"height":600,"hOffset":-15,"vOffset":-15},"mobile":{"show":false},"react":{"opacity":0.7},"log":false});</script></body></html>
