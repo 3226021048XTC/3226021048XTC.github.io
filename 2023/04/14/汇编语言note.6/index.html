@@ -156,9 +156,41 @@
 </tbody>
 </table>
 </div>
-<p><strong>(4)测试CX的值为0，则转移的指令</strong></p>
+<p><strong>测试CX的值为0，则转移的指令</strong></p>
 <p>格式：JCXZ LABLE</p>
 <p>如果CX寄存器的内容为0，则转移到指定的地址标号出；</p>
+<p><strong>循环控制指令</strong></p>
+<p>循环指令默认利用CX计数器，属于段内短转移；</p>
+<p>LOOP的功能是将CX=CX-1，然后判断CX≠0？来控制程序的执行顺序；</p>
+<p>格式： LOOP LABLE</p>
+<p>CX=CX-1，如果CX≠0，则转到LABLE，进行循环；否则推退出，顺序执行下一句；</p>
+<p>格式：LOOPZ/LOOPE LABLE</p>
+<p>CX=CX-1，如果CX≠0且ZF=1，则转到LABLE，循环；否则退出，顺序执行下一句；</p>
+<p>格式：LOOPNZ/LOOPNE LABLE</p>
+<p>CX=CX-1，如果CX≠0且ZF=0，转到LABLE进行循环；否则退出循环，顺序执行下一句；</p>
+<p><strong>子程序调用及返回指令</strong></p>
+<p>子程序是完成特定功能的一段程序，采用子程序能够提高编程的效率，使程序更加清楚，以便于维护；</p>
+<p><strong>CALL</strong>：子程序调用指令</p>
+<p>在执行CALL时将CALL的下一条指令的地址（段地址，偏移地址）压入堆栈中，以便子程序执行结束后正确返回；然后转移到目标地址；</p>
+<p>CALL指令位于主程序中，子程序可以和指令在同一代码段内，也可以在不同的代码段，所以分为<u>段内调用</u>和<u>段间调用</u>；调用时有<u>直接寻址</u>和<u>间接寻址</u>两种方式，故调用指令有四种格式；</p>
+<p>格式：CALL (NEAR PTR) LABLE</p>
+<p>段内直接调用，这个指令是先将call + 标号的下一条语句的IP放入栈中，然后使当前的IP+16位位移;</p>
+<p>格式：CALL 16位寄存器或内存单元操作数</p>
+<p>段内间接调用，这个指令先将call的下一条指令的IP入栈，然后再以操作数作为IP的修改后的值；</p>
+<p>格式：CALL FAR PTR LABLE</p>
+<p>段间直接调用，这个指令是先将call指令的下一个指令的代码段地址入栈，再把call下一条指令的偏移地址入栈，然后使其跳到标号所在处;</p>
+<p>格式：CALL FAR  内存单元操作数</p>
+<p>段间间接调用，高位为CS的值，低位为IP的值；</p>
+<p><strong>RET</strong>：返回指令，为子程序最后执行的指令，与CALL成对出现，将堆栈中CALL的下一条指令的段地址和偏移地址送回CS,IP；</p>
+<p>根据段内和段间，有无参数分成四类；</p>
+<p>格式：RET(N)</p>
+<p>用栈中的数据，修改IP的内容，从而实现<strong>近转移</strong>；</p>
+<p>格式：RETF</p>
+<p>用栈中的数据，修改CS和IP的内容，从而实现<strong>远转移</strong>；</p>
+<p>格式：RET N</p>
+<p>N作为一个16位立即数，则堆栈指针SP增加，SP=SP+N，方便程序从堆栈段中去除若干CALL指令之后的入栈参数；</p>
+<p>格式：RETF N</p>
+<p>最后，call、ret、retf 这三条指令执行后不会对标志位产生影响</p>
 <div id="paginator"></div></div><div id="post-footer"></div><div id="Valine"></div><div id="bottom-btn"><a id="to-index" href="#toc-div" title="index">≡</a><a id="to-top" onClick="scrolls.scrolltop();" title="to top" style="opacity: 0; display: none;">∧</a></div></article><aside><div id="aside-top"><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/3226021048XTC">Dr.落叶潇潇</a></h1><div id="description"><p>感</p><p>染</p><p>者</p><p>应</p><p>该</p><p>为</p><p>自</p><p>己</p><p>的</p><p>身</p><p>份</p><p>而</p><p>骄</p><p>傲</p><p>，</p><p>并</p><p>用</p><p>最</p><p>简</p><p>单</p><p>的</p><p>手</p><p>段</p><p>夺</p><p>取</p><p>大</p><p>地</p><p>的</p><p>公</p><p>正</p></div></div><div id="aside-block"><div id="toc-div"><h1>INDEX</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E8%BD%AC%E7%A7%BB%E6%8C%87%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">控制转移指令</span></a></li></ol></div></div></div><footer><nobr><span class="text-title">ICP</span><a class="text-content" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">罗德岛：R111</a></nobr><nobr>published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknight</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><div id="cursor-container"><div id="cursor-outer"></div><div id="cursor-effect"></div></div><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{new Valine({
  el: '#Valine'
  , appId: 'LSe7mf1XYliLqgIrc3jlqXfT-gzGzoHsz'
