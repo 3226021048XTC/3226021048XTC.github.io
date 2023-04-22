@@ -42,6 +42,24 @@
 <p>用于于8087同步，由于8087执行浮点指令较慢，8086必须与8087保持同步；</p>
 <p>高电平保存WAIT状态，低电平退出WAIT状态；</p>
 <p>更多：<a target="_blank" rel="noopener" href="http://www.weijiyuanli.cn/_cai/cbiancheng/asm/90/index.html">汇编语言字符串和数组- 汇编语言程序设计 - 春软虚拟实验室vlab.cn (weijiyuanli.cn)</a></p>
+<p><strong>标志操作指令</strong></p>
+<p>格式：</p>
+<ul>
+<li><p>CLC:进位标志指令<strong>CLC</strong>(Clear Carry Flag),影响CF = 0;</p>
+</li>
+<li><p>STC:进位标志指令<strong>STC</strong>(SeT Carry Flag),影响CF = 1;</p>
+</li>
+<li><p>CMC:进位标志取反指令<strong>CMC</strong>(CoMplement Carry flag)如果CF = 1，则执行后CF = 0;如果CF = 0，则执行后CF = 1;</p>
+</li>
+<li><p>CLD:方向标志<strong>CLD</strong>(CLear Direction flag),影响DF = 0;</p>
+</li>
+<li><p>STD:方向标志<strong>STD</strong>(SeT Direction flag),影响DF = 1;</p>
+</li>
+<li><p>CLI:中断允许标志<strong>CLI</strong>(CLear Interrupt enable flag),影响IF = 0;</p>
+</li>
+<li><p>STI:断标志<strong>STI</strong>(SeT interrupt enable flag),影响IF = 1;</p>
+</li>
+</ul>
 <div id="paginator"></div></div><div id="post-footer"></div><div id="Valine"></div><div id="bottom-btn"><a id="to-index" href="#toc-div" title="index">≡</a><a id="to-top" onClick="scrolls.scrolltop();" title="to top" style="opacity: 0; display: none;">∧</a></div></article><aside><div id="aside-top"><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/3226021048XTC">Dr.落叶潇潇</a></h1><div id="description"><p>感</p><p>染</p><p>者</p><p>应</p><p>该</p><p>为</p><p>自</p><p>己</p><p>的</p><p>身</p><p>份</p><p>而</p><p>骄</p><p>傲</p><p>，</p><p>并</p><p>用</p><p>最</p><p>简</p><p>单</p><p>的</p><p>手</p><p>段</p><p>夺</p><p>取</p><p>大</p><p>地</p><p>的</p><p>公</p><p>正</p></div></div><div id="aside-block"><div id="toc-div"><h1>INDEX</h1><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E5%99%A8%E6%8E%A7%E5%88%B6%E6%8C%87%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">处理器控制指令</span></a></li></ol></div></div></div><footer><nobr><span class="text-title">ICP</span><a class="text-content" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">罗德岛：R111</a></nobr><nobr>published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknight</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><div id="cursor-container"><div id="cursor-outer"></div><div id="cursor-effect"></div></div><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{new Valine({
  el: '#Valine'
  , appId: 'LSe7mf1XYliLqgIrc3jlqXfT-gzGzoHsz'

@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>汇编语言note.8 | Hexo</title><script src="//unpkg.com/valine/dist/Valine.min.js"></script><script>var config = {"root":"/","path":""}</script><script src="//unpkg.com/mermaid@8.13.5/dist/mermaid.min.js"></script><script>mermaid.initialize({
+ startOnLoad: true
+ , theme: 'dark'
+});</script><link rel="stylesheet" href="/css/arknights.css"><link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.4.0/styles/atom-one-dark-reasonable.min.css"><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 6.3.0"></head><body style="background-image:url(https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg);"><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><ol class="navContent"><li class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></li><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/demo/"><span class="navItemTitle">独立页面</span></a></li></ol></nav><div class="search-popup"><div id="search-result"></div></div></header><article><div id="post-title"><h1>汇编语言note.8</h1></div><hr><div id="post-content"><h3 id="输入-输出指令"><a href="#输入-输出指令" class="headerlink" title="输入/输出指令"></a>输入/输出指令</h3><p>输入/输出指令时控制CPU与外设交换数据的指令;</p>
+<p><strong>IN</strong>：数据由端口到CPU；</p>
+<p><strong>OUT</strong>：数据由CPU到端口；</p>
+<p>在IN/OUT指令中，只能用AX或者AL寄存器来存放从端口读入的数据或者要发到端口中的数据；</p>
+<p>输入格式：</p>
+<p>n为8位的端口地址；</p>
+<ul>
+<li><p>IN AL,n 表示从端口地址为n的地址读取一字节数据到AL</p>
+</li>
+<li><p>IN AX,n 表示从端口地址n读取1字节数据到AL，从端口地址n+1读取1字节到AH</p>
+</li>
+</ul>
+<p>当端口地址为16位时，应将16位端口地址送入DX寄存器中；</p>
+<ul>
+<li><p>IN AL,DX 将DX作为端口地址中的内容送到AL</p>
+</li>
+<li><p>IN AX,DX 将DX作为端口地址中的内容送到AL，将（DX+1）的端口地址内容送AH</p>
+<p>输出格式：</p>
+</li>
+</ul>
+<p>n为8位端口地址，DX为16位端口地址；</p>
+<ul>
+<li><p>OUT n，AL</p>
+</li>
+<li><p>OUT n，AX</p>
+</li>
+<li><p>OUT DX，AL</p>
+</li>
+<li><p>OUT DX，AX</p>
+</li>
+</ul>
+<p>具体方法和含义同上</p>
+<p>输入/输出指令不影响标志位；</p>
+<p><strong>中断指令</strong></p>
+<p>一般情况下，系统将一些具有一定功能的子程序，以中断处理程序的方式提供给应用程序调用。我们在编程的时候，可以用int指令调用这些子程序。</p>
+<p>中断是一种改变程序执行顺序的方法；</p>
+<p>中断：CPU暂停现行的程序，转去处理I/O设备的请求，或者某些紧急事件，处理完后CPU返回原来的程序并运行，这个处理过程叫做中断；</p>
+<p>引起中断的事件或设备叫做<strong>中断源</strong>，被中断的地方叫<strong>断点</strong>，CPU被中断后转去执行的程序叫<strong>中断处理程序(中断例程)或中断子程序</strong>；</p>
+<p>中断系统的功能：能实现中断响应，中断服务和中断返回；能实现中断优先级排队，优先级高的先处理；能实现中断嵌套；</p>
+<p>一个完整的中断基本过程包括：<strong>中断请求</strong>、<strong>中断判优</strong>、<strong>中断响应</strong>、<strong>中断处理</strong>及<strong>中断返回</strong>等五个基本过程。</p>
+<p>具体：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Anpache/article/details/120751481">汇编语言—中断 (8259A)_中断类型码_Anpache的博客-CSDN博客</a></p>
+<p>中断向量表：存放中断地址的一段内存空间称中断向量表，表的地址位于内存的0000H~03FFH，1KB大小，共256个入口每个入口占用4个单元，依次位IP：CS，低字节为段内偏移，高字节为段基址；</p>
+<p>0~FH为专用中断，10~1FH为BIOS中断，20H~3FH为DOS中断，40H~5FH 保留，60H~67H为用户中断，68H~7FH 保留,80H~85H 由BASIC保留，86H~F0H BASIC中断，F1H~FFH 保留；</p>
+<p>中断处理程序的入口地址=中断类型号*4个字节；</p>
+<p>   中断类型：</p>
+<ul>
+<li>外部非屏蔽中断(<strong>NMI</strong>)，中断源来自CPU之外，不受内部中断允许标志位IF的控制，通常情况下CPU必须响应这类中断，一般在一个系统中只允许一个非屏蔽中断；</li>
+<li>外部可屏蔽中断(<strong>INTR</strong>)：中断源来自CPU之外，受IF的控制，只有IF=1时，CPU才响应该中断，当IF=0时，中断请求被屏蔽；</li>
+<li>内部中断（软件中断）：CPU根据某些指令或者程序对标识符的设置而产生的中断请求，与外部电路无关，是自身引发的中断事件，内部中断有四种：</li>
+</ul>
+<p>1.除法错中断：被0除或除法溢出（0号中断）；</p>
+<p>2.单步中断：当单步标志符TF=1时，每执行一条指令后产生单步中断（1号中断）；</p>
+<p>3.溢出中断：执行中断指令<strong>INTO</strong>时，如OF=1，则产生溢出中断（4号中断）；</p>
+<p>4.<strong>INT</strong>指令中断：执行中断调用指令<strong>INT</strong>  n，产生指令中断，其中n=0~255；</p>
+<p>中断指令：<strong>INT</strong></p>
+<p>格式：INT n </p>
+<p>产生n号中断，n为8位立即数；</p>
+<p>功能：将标志寄存器入栈保护，把<strong>IF</strong>和<strong>TF</strong>置为0，把当前地址入栈保护，通过n转到中断程序的地址，n×4作为ip参数，n×4+2作为cs参数；</p>
+<p>溢出中断指令：<strong>INTO</strong></p>
+<p>格式：INTO</p>
+<p>若OF=1，说明发生溢出，产生4号中断，否则顺序执行，OF=0时本指令不起中断调用指令；</p>
+<p>中断返回指令：<strong>IRET</strong></p>
+<p>格式：<strong>IRET</strong></p>
+<p>iret指令执行后，CPU回到执行中断处理程序前的执行点继续执行程序;</p>
+<div id="paginator"></div></div><div id="post-footer"></div><div id="Valine"></div><div id="bottom-btn"><a id="to-index" href="#toc-div" title="index">≡</a><a id="to-top" onClick="scrolls.scrolltop();" title="to top" style="opacity: 0; display: none;">∧</a></div></article><aside><div id="aside-top"><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/3226021048XTC">Dr.落叶潇潇</a></h1><div id="description"><p>感</p><p>染</p><p>者</p><p>应</p><p>该</p><p>为</p><p>自</p><p>己</p><p>的</p><p>身</p><p>份</p><p>而</p><p>骄</p><p>傲</p><p>，</p><p>并</p><p>用</p><p>最</p><p>简</p><p>单</p><p>的</p><p>手</p><p>段</p><p>夺</p><p>取</p><p>大</p><p>地</p><p>的</p><p>公</p><p>正</p></div></div><div id="aside-block"><div id="toc-div"><h1>INDEX</h1><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E6%8C%87%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">输入&#x2F;输出指令</span></a></li></ol></div></div></div><footer><nobr><span class="text-title">ICP</span><a class="text-content" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">罗德岛：R111</a></nobr><nobr>published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknight</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><div id="cursor-container"><div id="cursor-outer"></div><div id="cursor-effect"></div></div><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{new Valine({
+ el: '#Valine'
+ , appId: 'LSe7mf1XYliLqgIrc3jlqXfT-gzGzoHsz'
+ , appKey: 'Fu9giJfnidkCamaW89FUpidw' , placeholder: '此条评论委托企鹅物流发送'
+});code.findCode();mermaid.init(undefined, ('.mermaid'));}</script><script src="//unpkg.com/@highlightjs/cdn-assets@11.4.0/highlight.min.js"></script><script src="/js/arknights.js"></script><script>window.addEventListener("load",()=>{reset()})</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/z16.model.json"},"display":{"position":"left","width":300,"height":600,"hOffset":-15,"vOffset":-15},"mobile":{"show":false},"react":{"opacity":0.7},"log":false});</script></body></html>
