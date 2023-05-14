@@ -1,0 +1,155 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>数组 | Hexo</title><script src="//unpkg.com/valine/dist/Valine.min.js"></script><script>var config = {"root":"/","path":""}</script><script src="//unpkg.com/mermaid@8.13.5/dist/mermaid.min.js"></script><script>mermaid.initialize({
+ startOnLoad: true
+ , theme: 'dark'
+});</script><link rel="stylesheet" href="/css/arknights.css"><link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.4.0/styles/atom-one-dark-reasonable.min.css"><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 6.3.0"></head><body style="background-image:url(https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg);"><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><ol class="navContent"><li class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></li><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/demo/"><span class="navItemTitle">独立页面</span></a></li></ol></nav><div class="search-popup"><div id="search-result"></div></div></header><article><div id="post-title"><h1>数组</h1></div><hr><div id="post-content"><h1 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h1><p><strong>数组</strong>(<strong>Array</strong>)是一种特殊的线性表，数组中的元素既可以是值，也可以是一个<strong>数据结构</strong>，但所有的元素都属于同一种数据类型；</p>
+<ul>
+<li><p>对于n维数组，可以指存储 n-1 维数组的一维数组；</p>
+</li>
+<li><p>数组的下标用于区分数组的各个元素（数组下标也相当于指针，用于指出元素在数组的地址）；</p>
+</li>
+<li><p>数组中的各元素的存储是有先后顺序的，它们在内存中按照这个先后顺序连续存放在一起（元素之间地址连续）；</p>
+</li>
+<li><p>数组一旦被定义，维数和维界就不能改变，因此处了结构的初始化和销毁外，数组只有存取和修改元素的操作；</p>
+</li>
+</ul>
+<p><strong>元素的地址计算公式（行优先）</strong>：</p>
+<p>对于计算一个元素的地址，需要知道开始元素的地址(基地址)，维数和每维的上，下界，每个元素占用的单元数；</p>
+<p>公式：Loc(j1,j2···,jn)=Loc(0,···,0,)(基地址)+L(bn(n维)Xb(n-1)Xb(n-2)······Xb3Xb2Xj1+bnXb(n-1)Xb(n-2)······Xb3Xj2+bnXb(n-1)Xb(n-2)······Xb4Xj3+···bnXj(n-1)+jn)XL(单个元素所占空间大小)；</p>
+<p><strong>函数功能（C语言）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">#include &lt;stdarg.h&gt; //标志头文件，提供va_start、va_arg和va_end三个函数<br></code></pre></td></tr></table></figure>
+<p><strong>对于这个函数：</strong></p>
+<p>在C中，当无法列出传递函数的所有实参的类型和数目时，可以用省略号指定参数表，即</p>
+<p>void 函数名(int a, …){}；</p>
+<p>在C中，通过利用va_start相关宏获取省略号指定的参数；</p>
+<p>va_list：定义一个指针，类型为参数表中的类型；</p>
+<p>va_start(va_list ap,a)：对指针ap进行初始化，指向参数变量a后面的第一个参数(在传递参数时，指向第二个传递过来的值（不知道为什么好吧）)；</p>
+<p>va_arg(va_list ap, 类型)：取得这个指针所指向的参数，并将该参数转换为选择的类型，然后使指针指向下一个参数（如果指向的参数中类型不符合，比如字母a，就将a变为ASCLL的格式）;</p>
+<p>va_end(va_list ap)：和va_start配套使用，使指针指向NULL；</p>
+<p><strong>一些操作：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">Status InitArray (Array &amp;A, int dim,…)&#123;    <br>//若维数dim和各维长度合法，则构造相应的数组A并返回OK<br>   if (dim&lt;1||dim&gt;MAX_ARRAY_DIM)  return ERROR;<br>   A.dim=dim;<br>   A.bounds=(int *)malloc(dim * sizeof(int)); <br>    if(!a.bounds) exit(OVERFLOW); // 分配存放“各维长度”的空间<br> //若各维长度合法，则存入A.bounds,并求出A的元素总数elemtotal<br>  elemtotal=1;<br>   va_start(ap, dim); <br>           //ap为va_list类型，是存放变长参数表信息的   类型，将ap指向dim后的第一个参数<br>   for(i=0;i&lt;dim;++i) &#123;<br>       A.bounds[i]=va_arg (ap, int);   <br>              // 返回ap当前指向的参数，并按参数类型将ap指向下一个参数<br>       if (A.bounds[i]&lt;0) return UNDERFLOW;<br>       elemtotal *=A.bounds[i];   &#125;<br>    va_end(ap);     //  ap使用完毕<br>   A.base=(ElemType * )malloc(elemtotal * sizeof(ElemType));<br>   if(!A.base) exit(OVERFLOW);  //  分配数组元素空间<br>   A.constants=(int * )malloc(dim *sizeof(int));<br>   if(!A.constans) exit(OVERFLOW);    //分配存放C i的空间<br>   A.constans[dim-1]=1;   //  L=1 <br>   for(i=dim-2;i&gt;=0;--i)<br>      A.constants[i]=A.bounds[i+1]*A.constants[i+1];// b i+1    C i+1<br>   return OK;                 <br> &#125;<br></code></pre></td></tr></table></figure>
+<pre><code>Status DestroyArray (Array &amp;A)
+&#123;     //销毁数组A
+   if ( ! A.base )  return   ERROR;
+   free(A.base);//数组基址指针
+   A .base  =  NULL;
+   if ( ! A.bounds )  return ERROR;
+   free( A .bounds );//各维长度保存区指针
+   A.bounds = NULL;
+   if ( !A.constants )   return ERROR;
+   free ( A. constants ) ;//映像函数Ci保存区指针
+   A. constants = NULL;
+   return OK;
+ &#125;
+
+Status Locate(Array A, va_list ap, int &amp;off) &#123;
+//若ap指示的各下标值合法，则求出该元素在A中相对地址off
+    off=0;
+    for(i=0;i&lt;A.dim;++i)
+    &#123;
+      ind= va_arg(ap, int);
+      if (ind&lt;0||ind&gt;A.bounds[i]) return OVERFLOW;
+      off += A.constants[i]  * ind ;//C i * j i
+    &#125;                     
+    return OK;
+ &#125;
+
+Status Value(Array A, ElemType &amp;e,…)
+&#123;
+  //A是n维数组，e为元素变量，随后是n个下标值，若各下标不超界，则e赋值为所指定的A的元素值，即将指定元素值读到e变量中。
+   va_start (ap, e);  // 将ap指向e后的参数
+   if((result=Locate(A, ap, off))&lt;=0) return result;
+   e=*(A.base+off); 
+   return OK;
+ &#125;
+
+Status Assign(Array &amp;A,ElemType e,…)
+&#123;
+  //A是n维数组，e为元素变量，随后是n个下标值，若各下 标不超界，则e的值赋为所指定的A的元素值，即：将e值写入指定数组单元。
+   va_start(ap,e);
+   if( (result=Locate(A,ap,off ) )&lt;=0) return result;
+   *(A.base+off)=e;
+   return OK;
+ &#125;
+</code></pre><p><strong>矩阵的压缩存储</strong>：</p>
+<p>由于在数值分析中经常出现一些阶数很高的矩阵，同时在矩阵中有许多值相同的元素或者是零元素，为了节省存储空间，可以对这类矩阵进行<strong>压缩存储</strong>，即多个值相同的元素只分配一个存储空间，对零元素则不分配空间；</p>
+<p>特殊矩阵：值相同的元素或零元素分布有一定规律，一般为对称矩阵，对角矩阵，三角矩阵；</p>
+<p>稀疏矩阵：非特殊矩阵，或矩阵中非零元素的个数较少（一般小于5%）；</p>
+<h4 id="特殊矩阵"><a href="#特殊矩阵" class="headerlink" title="特殊矩阵"></a>特殊矩阵</h4><p><strong>n阶对称矩阵</strong>：Aij=Aji，1≤i，j≤n；</p>
+<p>对于这样的矩阵，只存储下三角部分的元素，以一维数组sa[n(n+1)/2]作为存储结构。</p>
+<p>(1+2+…+n=n(n+1)/2)；</p>
+<p>sa[k]和Aij间的对应关系(1=&lt;i,j&lt;=n)</p>
+<p>当i≥j时，Aij是下三角中的元，k=i(i-1)/2+j-1；</p>
+<p>当i&lt;j时，Aij是上三角中的元， k=j(j-1)/2+i-1；</p>
+<p><strong>对角矩阵</strong>：这类矩阵中，所以非零元素集中在以主对角线为中心的带状区域上，即除了主对角线上和直接在对角线上下方若干条对角线的元素之外，所以其他位置的元素都为零；</p>
+<p>按照某个原则（或以行为主，或以对角线为主的顺序）将其压缩在一维数组上；</p>
+<h4 id="稀疏矩阵"><a href="#稀疏矩阵" class="headerlink" title="稀疏矩阵"></a>稀疏矩阵</h4><p>假设在MXN的矩阵中，有T个不为零的元素，令δ=T/(MXN)，则δ称为矩阵的稀疏因子，通常认为δ≤0.05时称为稀疏矩阵；</p>
+<p>对于稀疏矩阵的压缩存储，只存储稀疏矩阵的非零元，同时记下它所在的行和列的位置(i,j)，即一个三元组（i，j，Aij）确定矩阵A的一个非零元；</p>
+<p> <strong>顺序存储表示</strong></p>
+<pre><code> #define MAXSIZE 125000  //设非零元素最大个数125000
+ typedef struct  &#123;
+   int i;             //元素行号
+   int j;            //元素列号
+   ElemType e;     //元素值
+&#125; Triple;        //一个结点的结构定义
+
+typedef struct  &#123;
+ Triple  data[MAXSIZE+1]; 
+//三元组表，以行为主序存入一维向量 data[ ]中
+    int mu;       //矩阵总行数
+    int nu;       //矩阵总列数
+    int tu;       //矩阵中非零元素总个数
+&#125; TsMatrix;     //整个三元组表的定义
+</code></pre><p><strong>十字链表</strong></p>
+<p>当矩阵的非0元素个数和位置在操作中变化较大时，适合用十字链表；</p>
+<p>在链表中每个非零元用一个含5个域的节点表示，其中<strong>i，j，e</strong>表示行，列和值，<strong>向右域right</strong>表示链接同一行中的下一个非零元，<strong>向下域down</strong>表示链接同一列中下一个非零元；</p>
+<p>同一行的非零元通过right域连接称一个线性链表，同一列的非零元通过down域连接成一个线性链表整个矩阵构成一个十字交叉的链表；</p>
+<pre><code>typedef struct OLNode&#123;
+    int i,j; //行和列下标
+    ElemType e; //值
+    struct OLNode *right,*down;//行和列的后继指针
+&#125;OLNode; *OLink;
+typedef struct&#123;
+    OLink *rhead,*chead; //行和列链表的头指针
+    int mu,nu,tu; //稀疏矩阵的行数，列数，非零元个数
+&#125;
+Status CreatSMatrix_OL(CrossList &amp;M)&#123;
+    //创建稀疏矩阵，用十字链表表示
+   if(M)free(M);
+   scanf(&amp;m,&amp;n,&amp;t);
+   M.mu=m;M.nu=n;M.tu=t;
+   if(!(M.rhead=(OLink *)malloc((m+1)*sizeof(OLink)))return 0;
+   if(!(M.chead=(OLink *)malloc((m+1)*sizeof(OLink)))return 0;
+   M.rhead[]=M.chead[]=NULL  //初始化链表，均为空链表
+   for(scanf(&amp;i,&amp;j,&amp;e);i!=0;scanf(&amp;i,&amp;j,&amp;e))&#123;
+    //按任意次序输入非零元
+    if(!(p=(OLNode *)malloc(sizeof(OLNode)))return 0;
+    p-&gt;i=i;p-&gt;j=j;p-&gt;e=e;//节点数据
+    if(M.rhead[i]==NULL||M.rhead[i]-&gt;j&gt;j)&#123;
+    p-&gt;right=M.rhead[i];M.rhead[i]=p;
+    &#125;
+    else&#123; //寻查在行表中的插入位置
+    for(q=M.rhead[i];(q-&gt;right)&amp;&amp;q-right-&gt;j&lt;j;q=q-&gt;right);//寻找位置
+    p-&gt;right=q-&gt;right;q-&gt;right=p;
+    &#125;
+    if(M.chead[j]==NULL||M.chead[j]-&gt;i&gt;i)&#123;
+    p-&gt;down=M.chead[j];M.chead[j]=p;
+    &#125;
+    else&#123; //寻查在列表中的插入位置
+    for(q=M.chead[j];(q-&gt;down)&amp;&amp;q-down-&gt;i&lt;i;q=q-&gt;down);//寻找位置
+    p-&gt;down=q-&gt;down;q-&gt;down=p;
+    &#125;
+  &#125;
+  return 1;
+&#125;
+</code></pre><div id="paginator"></div></div><div id="post-footer"></div><div id="Valine"></div><div id="bottom-btn"><a id="to-index" href="#toc-div" title="index">≡</a><a id="to-top" onClick="scrolls.scrolltop();" title="to top" style="opacity: 0; display: none;">∧</a></div></article><aside><div id="aside-top"><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/3226021048XTC">Dr.落叶潇潇</a></h1><div id="description"><p>感</p><p>染</p><p>者</p><p>应</p><p>该</p><p>为</p><p>自</p><p>己</p><p>的</p><p>身</p><p>份</p><p>而</p><p>骄</p><p>傲</p><p>，</p><p>并</p><p>用</p><p>最</p><p>简</p><p>单</p><p>的</p><p>手</p><p>段</p><p>夺</p><p>取</p><p>大</p><p>地</p><p>的</p><p>公</p><p>正</p></div></div><div id="aside-block"><div id="toc-div"><h1>INDEX</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E7%BB%84"><span class="toc-number">1.</span> <span class="toc-text">数组</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%B9%E6%AE%8A%E7%9F%A9%E9%98%B5"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">特殊矩阵</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5"><span class="toc-number">1.0.0.2.</span> <span class="toc-text">稀疏矩阵</span></a></li></ol></li></ol></li></ol></li></ol></div></div></div><footer><nobr><span class="text-title">ICP</span><a class="text-content" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">罗德岛：R111</a></nobr><nobr>published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknight</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><div id="cursor-container"><div id="cursor-outer"></div><div id="cursor-effect"></div></div><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{new Valine({
+ el: '#Valine'
+ , appId: 'LSe7mf1XYliLqgIrc3jlqXfT-gzGzoHsz'
+ , appKey: 'Fu9giJfnidkCamaW89FUpidw' , placeholder: '此条评论委托企鹅物流发送'
+});code.findCode();mermaid.init(undefined, ('.mermaid'));}</script><script src="//unpkg.com/@highlightjs/cdn-assets@11.4.0/highlight.min.js"></script><script src="/js/arknights.js"></script><script>window.addEventListener("load",()=>{reset()})</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/z16.model.json"},"display":{"position":"left","width":300,"height":600,"hOffset":-15,"vOffset":-15},"mobile":{"show":false},"react":{"opacity":0.7},"log":false});</script></body></html>

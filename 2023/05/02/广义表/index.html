@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>广义表 | Hexo</title><script src="//unpkg.com/valine/dist/Valine.min.js"></script><script>var config = {"root":"/","path":""}</script><script src="//unpkg.com/mermaid@8.13.5/dist/mermaid.min.js"></script><script>mermaid.initialize({
+ startOnLoad: true
+ , theme: 'dark'
+});</script><link rel="stylesheet" href="/css/arknights.css"><link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.4.0/styles/atom-one-dark-reasonable.min.css"><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><meta name="generator" content="Hexo 6.3.0"></head><body style="background-image:url(https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg);"><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><ol class="navContent"><li class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></li><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/demo/"><span class="navItemTitle">独立页面</span></a></li></ol></nav><div class="search-popup"><div id="search-result"></div></div></header><article><div id="post-title"><h1>广义表</h1></div><hr><div id="post-content"><h1 id="广义表"><a href="#广义表" class="headerlink" title="广义表"></a>广义表</h1><p>广义表是线性表的推广，也称为列表（lists）；</p>
+<p>约定：</p>
+<ul>
+<li><p>第一个元素是<strong>表头(Head</strong>)，其余元素组成的表是<strong>表尾(Tail)</strong>；</p>
+</li>
+<li><p>用小写字母表示原子类型，用大写字母表示列表；</p>
+</li>
+</ul>
+<p>广义表中元素既可以是<strong>原子</strong>类型，也可以是列表(<strong>子表</strong>)； 当每个元素都为原子且类型相同时，就是线性表；</p>
+<p>特点：</p>
+<ul>
+<li><p>有次序性：一个直接前驱和一个直接后继；</p>
+</li>
+<li><p>有长度：表中元素个数；</p>
+</li>
+<li><p>有深度：表中括号的重数；</p>
+</li>
+<li><p>可递归：自己可以作为自己的子表；</p>
+</li>
+<li><p>可共享：可以为其他广义表所共享（共享时可以不必列出子表的值，通过子表的名称引用）；</p>
+</li>
+</ul>
+<p>由于广义表中的数据元素可以具有不同的结构，难以用顺序存储结构表示通常采用链式存储结构，每个数据用一个节点表示；</p>
+<p>用原子节点和表节点表示两种不同的数据结构；</p>
+<p>表节点由<strong>标志域，指示表头的指针域和指示表尾的指针域</strong>组成；</p>
+<p>原子节点由<strong>标志域和值域</strong>组成；</p>
+<pre><code>//广义表的头尾链表存储表示
+typedef enum &#123;ATOM,LIST&#125;ElemTag;//ATOM==0,原子,LIST==1;子表
+typedef struct GLNode&#123;
+    ElemTag tag;//公共部分，用于区分原子结点和表结点
+    union &#123;
+    AtomType atom;//原子结点的值域
+    struct &#123;struct GLNode *hp,*tp;&#125;*ptr;//ptr为表结点的指针域，hp和tp分别
+                                        //指向表头和表尾
+&#125;；
+&#125;*GList;  //广义表类型的GList为一种扩展的线性链表
+
+//广义表的扩展线性链表存储表示
+typedef enum &#123;ATOM,LIST&#125;;//ATOM==0,原子,LIST==1;子表
+typedef struct GLNode&#123;
+    ElemTag tag;//公共部分，用于区分原子结点和表结点
+    union &#123;
+    AtomType atom;//原子结点的值域
+    struct GLNode *hp;//表结点的表头指针
+&#125;；
+    struct GLNode *tp;//相当于线性链表的next，指向下一个元素结点；
+&#125;*GList;  //广义表类型的GList为一种扩展的线性链表
+</code></pre><div id="paginator"></div></div><div id="post-footer"></div><div id="Valine"></div><div id="bottom-btn"><a id="to-index" href="#toc-div" title="index">≡</a><a id="to-top" onClick="scrolls.scrolltop();" title="to top" style="opacity: 0; display: none;">∧</a></div></article><aside><div id="aside-top"><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/3226021048XTC">Dr.落叶潇潇</a></h1><div id="description"><p>感</p><p>染</p><p>者</p><p>应</p><p>该</p><p>为</p><p>自</p><p>己</p><p>的</p><p>身</p><p>份</p><p>而</p><p>骄</p><p>傲</p><p>，</p><p>并</p><p>用</p><p>最</p><p>简</p><p>单</p><p>的</p><p>手</p><p>段</p><p>夺</p><p>取</p><p>大</p><p>地</p><p>的</p><p>公</p><p>正</p></div></div><div id="aside-block"><div id="toc-div"><h1>INDEX</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B9%BF%E4%B9%89%E8%A1%A8"><span class="toc-number">1.</span> <span class="toc-text">广义表</span></a></li></ol></div></div></div><footer><nobr><span class="text-title">ICP</span><a class="text-content" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">罗德岛：R111</a></nobr><nobr>published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknight</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><div id="cursor-container"><div id="cursor-outer"></div><div id="cursor-effect"></div></div><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{new Valine({
+ el: '#Valine'
+ , appId: 'LSe7mf1XYliLqgIrc3jlqXfT-gzGzoHsz'
+ , appKey: 'Fu9giJfnidkCamaW89FUpidw' , placeholder: '此条评论委托企鹅物流发送'
+});code.findCode();mermaid.init(undefined, ('.mermaid'));}</script><script src="//unpkg.com/@highlightjs/cdn-assets@11.4.0/highlight.min.js"></script><script src="/js/arknights.js"></script><script>window.addEventListener("load",()=>{reset()})</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/z16.model.json"},"display":{"position":"left","width":300,"height":600,"hOffset":-15,"vOffset":-15},"mobile":{"show":false},"react":{"opacity":0.7},"log":false});</script></body></html>
