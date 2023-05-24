@@ -8,15 +8,62 @@
 @font-face {
  font-family: 'JetBrains Mono';
  src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
-}</style><meta name="generator" content="Hexo 6.3.0"></head><body style="background-image:url(https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg);"><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><ol class="navContent"><li class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></li><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/demo/"><span class="navItemTitle">独立页面</span></a></li></ol></nav><div class="search-popup"><div id="search-result"></div></div></header><article><div id="post-title"><h1>汇编语言note.3</h1></div><hr><div id="post-content"><h1 id="80x86指令系统"><a href="#80x86指令系统" class="headerlink" title="80x86指令系统"></a>80x86指令系统</h1><h4 id="1-加法指令："><a href="#1-加法指令：" class="headerlink" title="1.加法指令："></a>1.加法指令：</h4><p><strong>add</strong>：不带进位加法指令</p>
+}</style><meta name="generator" content="Hexo 6.3.0"></head><body style="background-image:url(https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg);"><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><ol class="navContent"><li class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></li><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/demo/"><span class="navItemTitle">独立页面</span></a></li></ol></nav><div class="search-popup"><div id="search-result"></div></div></header><article><div id="post-title"><h1>汇编语言note.3</h1></div><hr><div id="post-content"><h1 id="80x86指令系统"><a href="#80x86指令系统" class="headerlink" title="80x86指令系统"></a>80x86指令系统</h1><h3 id="数据传输指令："><a href="#数据传输指令：" class="headerlink" title="数据传输指令："></a>数据传输指令：</h3><p><strong>mov</strong>：数据传送指令</p>
+<p>指令格式：mov opd,ops</p>
+<p>将源操作数中的一个字节或字传送到目的操作数中，不影响标志存储器；</p>
+<p>分为四类：</p>
+<ul>
+<li><p>立即数送至寄存器或内存单元</p>
+</li>
+<li><p>寄存器送至段寄存器，寄存器，内存单元</p>
+</li>
+<li><p>内存单元送至寄存器，段寄存器</p>
+</li>
+<li><p>段寄存器送至寄存器，内存单元</p>
+</li>
+</ul>
+<p>结：</p>
+<p>两个存储单元之间不可以直接传送数据；</p>
+<p>目的操作数不能是cs寄存器（由电脑直接提供）以及立即数；</p>
+<p>源操作数和目的操作数位必须一样；</p>
+<p>计算机根据寄存器默认其省略的段寄存器，所以指令只要给出偏移地址；</p>
+<p>在内存和寄存器之间传送时，高地址对应高八位寄存器，低地址对应低寄存器；</p>
+<p><strong>XCHG</strong>：交换指令</p>
+<p>指令格式：XCHG OPD,OPS</p>
+<p>将源操作数和目的操作数内容互换，对标志寄存器无影响，但不允许两个内存单元之间进行互换；</p>
+<p><strong>XLAT</strong>：查表指令</p>
+<p>格式：XLAT TABLE或XLAT</p>
+<p>执行前将待查表格TABLE的首地址先送至BX寄存器中，将待查字节与距表首地址的位移量（距离表首的偏移地址）送至AL中；</p>
+<p>执行后将待查表格的一个字节内容送到AL累加器中，所建字节表格的长度不能超过256字节，因为存放位移量的是8位寄存器AL；</p>
+<p><strong>PUSH和POP</strong>：压栈和出栈指令，<del>没什么好写，拜了个拜</del>~</p>
+<p><strong>LAHF</strong>：标志位送AH指令</p>
+<p>格式：LAHF</p>
+<p>将标志寄存器PSW的低八位传送到AH，指令不影响标志寄存器内容；</p>
+<p>（低八位：CF(0)，PF(2)，AF(4)，ZF(6)，SF(7)）</p>
+<p><strong>SAHF</strong>：AH送标志寄存器指令</p>
+<p>格式：SAHF</p>
+<p>将AH寄存器内容送到标志寄存器FLAG的低八位，指令影响PSW中的SF，ZF，AF，PF，CF标志；</p>
+<p><strong>PUSHF</strong>：标志进栈指令</p>
+<p>格式：PUSHF</p>
+<p>标志寄存器入栈，sp=sp-2，不影响标志寄存器内容；</p>
+<p><strong>POPF</strong>：标志出栈指令</p>
+<p>格式：POPF</p>
+<p>与PUSHF功能相反，将栈顶内容送至标志寄存器，sp=sp+2，影响标志寄存器内容；</p>
+<p><strong>LEA</strong>：有效地址指令</p>
+<p>格式：LEA OPD,OPS；</p>
+<p>OPD通常为16位的通用寄存器，通常为BX，BP，SI，DI，OPS通常为变量名，标号或地址表达式；</p>
+<p><strong>LDS和LES</strong>：取地址指令</p>
+<p>格式：LDS/LES OPD,OPS</p>
+<p>OPD为任意16位寄存器，OPS为存储器地址，把OPS指向的存储单元的连续4个字节的内容分别送OPD(LDS)和DS寄存器或ES寄存器中(LES)；</p>
+<h4 id="加法指令："><a href="#加法指令：" class="headerlink" title="加法指令："></a>加法指令：</h4><p><strong>add</strong>：不带进位加法指令</p>
 <p>格式：add opd，ops </p>
 <p>完成两个操作数的相加，并将其放在opd中，其中opd可以是寄存器和内存单元，ops为寄存器，内存单元或立即数；</p>
 <p>对标志位CF和OF有影响，CF=1表示最高有效位向更高位有进位，为0则表示无进位；OF=1表示两个同符号数相加结果符号与其相反，即相加结果溢出，为0表示两个不同符号数相加，或同符号数相加，结果符号与其相同；</p>
 <p>剩下的标识符被结果所影响，</p>
-<p>对SF的影响：反映有符号数运算结果的正负性，正数为0，负数为1；</p>
-<p>对ZF的影响：判断结果是否为0，结果为0，ZF=1，否则ZF=0；</p>
-<p>对PF的影响：结果的二进制表示中1的个数是否为偶数，若1的个数为偶数，PF=1；若1的个数为奇数，PF=0；</p>
-<p>对AF的影响：在进行算术运算的时候，如果低字节中低4位产生进位或者借位的时候，则置1，否则置0。即当两个字节相加时，如果从第3位向第4位形成了进位，则AF=1</p>
+<p>对<strong>SF</strong>的影响：反映有符号数运算结果的正负性，正数为0，负数为1；</p>
+<p>对<strong>ZF</strong>的影响：判断结果是否为0，结果为0，ZF=1，否则ZF=0；</p>
+<p>对<strong>PF</strong>的影响：结果的二进制表示中1的个数是否为偶数，若1的个数为偶数，PF=1；若1的个数为奇数，PF=0；</p>
+<p>对AF的影响：在进行算术运算的时候，如果低字节中低4位产生进位或者借位的时候，则置1，否则置0。即当两个字节相加时，如果从第3位向第4位(AL-&gt;AH)形成了进位，则AF=1</p>
 <p><strong>adc</strong>：带进位加法指令</p>
 <p>格式：adc opd，ops</p>
 <p>在add的基础上，相加时加上CF，即opd&lt;-opd+ops+cf，其中opd与ops要求与add相同；</p>
@@ -25,7 +72,7 @@
 <p>格式：inc opd</p>
 <p>opd的内容加1，其中opd可以是寄存器或内存单元，若是内存单元，应指定是字节或字单元；</p>
 <p>对标志位的影响除了不影响CF以外，和上面相同；</p>
-<h4 id="2-减法指令"><a href="#2-减法指令" class="headerlink" title="2.减法指令"></a>2.减法指令</h4><p><strong>sub</strong>：不带借位减法</p>
+<h4 id="减法指令"><a href="#减法指令" class="headerlink" title="减法指令"></a>减法指令</h4><p><strong>sub</strong>：不带借位减法</p>
 <p>格式：sub opd，ops</p>
 <p>完成两个操作数的相减，将其结果存放于opd，其中opd可以是寄存器和内存单元，ops为寄存器，内存单元或立即数；</p>
 <p>对CF的影响：CF=1表示减法运算中最高有效位向更高位有借位，即被减数小于减数，不够减的情况，CF=0则表示无借位；</p>
@@ -56,7 +103,7 @@
 <p>目的操作数&lt;源操作数 SF≠OF</p>
 <p>目的操作数&gt;源操作数 SF=OF</p>
 <p>目的操作数=源操作数 ZF=1</p>
-<h4 id="3-乘法指令"><a href="#3-乘法指令" class="headerlink" title="3.乘法指令"></a>3.乘法指令</h4><p><strong>mul</strong>：无符号乘法数指令</p>
+<h4 id="乘法指令"><a href="#乘法指令" class="headerlink" title="乘法指令"></a>乘法指令</h4><p><strong>mul</strong>：无符号乘法数指令</p>
 <p>格式：mul opd</p>
 <p>操作数可以是寄存器和内存单元，但不能是立即数；当操作数为内存单元时应指明是字节还是字数据；</p>
 <p><strong>word ptr指明了指令访问的内存单元是一个字单元</strong>；</p>
@@ -80,7 +127,7 @@
 <li>求补（计算机中存放的是补码）</li>
 <li>取有效位，比如3位数据相乘，得到的结果取有效位6位即可。</li>
 </ol>
-<h4 id="4-除法指令"><a href="#4-除法指令" class="headerlink" title="4.除法指令"></a>4.除法指令</h4><p><strong>div</strong>：无符号除法</p>
+<h4 id="除法指令"><a href="#除法指令" class="headerlink" title="除法指令"></a>除法指令</h4><p><strong>div</strong>：无符号除法</p>
 <p>格式：div opd</p>
 <p>操作数可以是寄存器或内存单元，不能是立即数；</p>
 <p>实现两个无符号数的除法运算，当opd为8位字节数据时为字节相除，被除数在AX中，除数在opd中，al存放商，ah存放余数，其中AX是隐含操作数；当opd为16位字数据时为字相除，被除数在DX和AX中，DX存放高字节，AX存放低字节，AX存放商，DX存放余数，AX，DX是隐含操作数；</p>
@@ -88,7 +135,7 @@
 <p>如果被除数高位的数值等于或大于除数，那么会产生溢出，也就是说除法的商放不下容纳它的位置，就会产生除法溢出，这将导致处理器异常并暂停执行当前程序，</p>
 <p><strong>idiv</strong>：有符号数除法指令</p>
 <p>格式与功能和div类似，只是专用于有符号数的相除；</p>
-<div id="paginator"></div></div><div id="post-footer"></div><div id="Valine"></div><div id="bottom-btn"><a id="to-index" href="#toc-div" title="index">≡</a><a id="to-top" onClick="scrolls.scrolltop();" title="to top" style="opacity: 0; display: none;">∧</a></div></article><aside><div id="aside-top"><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/3226021048XTC">Dr.落叶潇潇</a></h1><div id="description"><p>感</p><p>染</p><p>者</p><p>应</p><p>该</p><p>为</p><p>自</p><p>己</p><p>的</p><p>身</p><p>份</p><p>而</p><p>骄</p><p>傲</p><p>，</p><p>并</p><p>用</p><p>最</p><p>简</p><p>单</p><p>的</p><p>手</p><p>段</p><p>夺</p><p>取</p><p>大</p><p>地</p><p>的</p><p>公</p><p>正</p></div></div><div id="aside-block"><div id="toc-div"><h1>INDEX</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#80x86%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.</span> <span class="toc-text">80x86指令系统</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8A%A0%E6%B3%95%E6%8C%87%E4%BB%A4%EF%BC%9A"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">1.加法指令：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%87%8F%E6%B3%95%E6%8C%87%E4%BB%A4"><span class="toc-number">1.0.0.2.</span> <span class="toc-text">2.减法指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E4%B9%98%E6%B3%95%E6%8C%87%E4%BB%A4"><span class="toc-number">1.0.0.3.</span> <span class="toc-text">3.乘法指令</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E6%89%A9%E5%B1%95"><span class="toc-number">1.0.0.3.0.1.</span> <span class="toc-text">符号扩展</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E6%89%A9%E5%B1%95%E8%AF%AD%E5%8F%A5"><span class="toc-number">1.0.0.3.0.2.</span> <span class="toc-text">符号扩展语句</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E9%99%A4%E6%B3%95%E6%8C%87%E4%BB%A4"><span class="toc-number">1.0.0.4.</span> <span class="toc-text">4.除法指令</span></a></li></ol></li></ol></li></ol></li></ol></div></div></div><footer><nobr><span class="text-title">ICP</span><a class="text-content" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">罗德岛：R111</a></nobr><nobr>published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknight</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><div id="cursor-container"><div id="cursor-outer"></div><div id="cursor-effect"></div></div><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{new Valine({
+<div id="paginator"></div></div><div id="post-footer"></div><div id="Valine"></div><div id="bottom-btn"><a id="to-index" href="#toc-div" title="index">≡</a><a id="to-top" onClick="scrolls.scrolltop();" title="to top" style="opacity: 0; display: none;">∧</a></div></article><aside><div id="aside-top"><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a target="_blank" rel="noopener" href="https://github.com/3226021048XTC">Dr.落叶潇潇</a></h1><div id="description"><p>感</p><p>染</p><p>者</p><p>应</p><p>该</p><p>为</p><p>自</p><p>己</p><p>的</p><p>身</p><p>份</p><p>而</p><p>骄</p><p>傲</p><p>，</p><p> </p><p>并</p><p>用</p><p>最</p><p>简</p><p>单</p><p>的</p><p>手</p><p>段</p><p>夺</p><p>取</p><p>大</p><p>地</p><p>的</p><p>公</p><p>正</p></div></div><div id="aside-block"><div id="toc-div"><h1>INDEX</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#80x86%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.</span> <span class="toc-text">80x86指令系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E6%8C%87%E4%BB%A4%EF%BC%9A"><span class="toc-number">1.0.1.</span> <span class="toc-text">数据传输指令：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A0%E6%B3%95%E6%8C%87%E4%BB%A4%EF%BC%9A"><span class="toc-number">1.0.1.1.</span> <span class="toc-text">加法指令：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%8F%E6%B3%95%E6%8C%87%E4%BB%A4"><span class="toc-number">1.0.1.2.</span> <span class="toc-text">减法指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B9%98%E6%B3%95%E6%8C%87%E4%BB%A4"><span class="toc-number">1.0.1.3.</span> <span class="toc-text">乘法指令</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E6%89%A9%E5%B1%95"><span class="toc-number">1.0.1.3.0.1.</span> <span class="toc-text">符号扩展</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E6%89%A9%E5%B1%95%E8%AF%AD%E5%8F%A5"><span class="toc-number">1.0.1.3.0.2.</span> <span class="toc-text">符号扩展语句</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%99%A4%E6%B3%95%E6%8C%87%E4%BB%A4"><span class="toc-number">1.0.1.4.</span> <span class="toc-text">除法指令</span></a></li></ol></li></ol></li></ol></li></ol></div></div></div><footer><nobr><span class="text-title">ICP</span><a class="text-content" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">罗德岛：R111</a></nobr><nobr>published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknight</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><div id="cursor-container"><div id="cursor-outer"></div><div id="cursor-effect"></div></div><script src="/js/search.js"></script><script class="pjax-js">reset=_=>{new Valine({
  el: '#Valine'
  , appId: 'LSe7mf1XYliLqgIrc3jlqXfT-gzGzoHsz'
  , appKey: 'Fu9giJfnidkCamaW89FUpidw' , placeholder: '此条评论委托企鹅物流发送'
